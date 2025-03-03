@@ -1,16 +1,27 @@
-# flutter_automatic_di
+# Flutter-AutomaticDI
 
-A new Flutter project.
+Simple flutter project (standard counter app) to test the automatic dependency injection.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Used packages:
 
-A few resources to get you started if this is your first Flutter project:
+- mobx for state management
+- provider to inject mobx store
+- get_it + injectable - service locator and dependency injector
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+App was built using Flutter 3.29.0 and Dart 3.7.0 + fvm was used to manage flutter and dart versions.
+
+FVM installation:
+
+- on macOS: brew tap leoafarias/fvm + brew install fvm
+- on Windows: choco install fvm
+- fvm install [version]: for example fvm install 3.29.0
+
+Running project:
+
+- fvm use 3.29.0
+- fvm flutter pub get - to get dependencies
+- select device and then Run from toolbar: -> start debugging/run without debugging

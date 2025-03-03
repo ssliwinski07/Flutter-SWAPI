@@ -9,7 +9,9 @@ import 'state_management/mobx/stores/counter_store.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  configureDependencies(env: mockEnv);
+  // set env parameter with prodEnv or mockEnv to init with prod/mock dependencies
+  // by defualt env=prodEnv
+  configureDependencies();
   runApp(const MyApp());
 }
 
