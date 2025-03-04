@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import '/state_management/mobx/stores/counter_store.dart';
+import '/state_management/mobx/central/app_state.dart';
 
 class CounterView extends StatelessWidget {
   const CounterView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final counterStore = Provider.of<CounterStore>(context);
+    final counterStore =
+        Provider.of<AppState>(context).counterModule.counterStore;
 
     return Scaffold(
       appBar: AppBar(

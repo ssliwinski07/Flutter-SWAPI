@@ -7,31 +7,35 @@ Simple flutter project (standard counter app) to test the automatic dependency i
 1. Used packages:
 
 - mobx for state management
-- provider to inject and share mobx store
+- provider to inject and manage app state
 - get_it + injectable - service locator and dependency injector
 
 2. Installation
 
-App was built using Flutter 3.29.0 and Dart 3.7.0 + fvm was used to manage flutter and dart versions. FVM is not required to run the project, but you can use it to set the proper flutter and dart versions. Documentation: https://fvm.app/documentation/getting-started
+   App was built using Flutter 3.29.0 and Dart 3.7.0 + FVM was used to manage flutter and dart versions. FVM is not required to run the project, but you can use it to set the proper flutter and dart versions. Documentation: https://fvm.app/documentation/getting-started
 
-Minimal SDKs required to run the project:
+   Minimal SDKs required to run the project:
 
-- dart: >= 3.7.0-0 <4.0.0
-- flutter: >= 3.18.0-18.0.pre.54
+   - dart: >= 3.7.0-0 <4.0.0
+   - flutter: >= 3.18.0-18.0.pre.54
 
-FVM installation (optional):
+   FVM installation (optional):
 
-- on macOS: brew tap leoafarias/fvm + brew install fvm
-- on Windows: choco install fvm
-- fvm install [version]: for example fvm install 3.29.0
+   - on macOS: brew tap leoafarias/fvm + brew install fvm
+   - on Windows: choco install fvm
+   - fvm install [version]: for example fvm install 3.29.0
 
-Running project with fvm:
+   Running project with FVM:
 
-- fvm use 3.29.0
-- fvm flutter pub get -> to get dependencies
-- select device and then Run from toolbar -> start debugging/run without debugging
+   - fvm use 3.29.0
+   - fvm flutter pub get -> to get dependencies
+   - select device and then Run from toolbar -> start debugging/run without debugging
 
-Running projected withouth fvm:
+   Running projected withouth FVM:
 
-- flutter pub get -> to get dependencies
-- select device and then Run from toolbar -> start debugging/run without debugging
+   - flutter pub get -> to get dependencies
+   - select device and then Run from toolbar -> start debugging/run without debugging
+
+## NOTES
+
+1. State management is centralized with modules using MobX (lib -> state_management -> mobx). Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. Lazy initialization has been implemented, so specific data stores are not initialized until they are needed.
