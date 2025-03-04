@@ -11,6 +11,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../state_management/mobx/modules/counter_module.dart' as _i741;
 import '../../state_management/mobx/stores/counter_store.dart' as _i810;
 import '../services/counter_service.dart' as _i1016;
 import '../services/counter_service_base.dart' as _i502;
@@ -30,6 +31,7 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    gh.factory<_i741.CounterModule>(() => _i741.CounterModule());
     gh.lazySingleton<_i502.CounterServiceBase>(
       () => _i270.CounterServiceMock(),
       registerFor: {_mock},
