@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'core/di/service_locator.dart';
 import 'UI/views/counter_view.dart';
-import 'state_management/mobx/stores/counter_store.dart';
 import 'state_management/mobx/central/app_state.dart';
+import '/core/di/service_locator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +21,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final serviceLocator = ServiceLocator();
+
     return Provider<AppState>(
-      create: (_) => AppState(),
+      create: (_) => serviceLocator.get<AppState>(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

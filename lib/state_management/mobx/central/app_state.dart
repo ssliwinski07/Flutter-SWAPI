@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '/state_management/mobx/modules/counter_module.dart';
@@ -7,6 +6,7 @@ import '/core/di/service_locator.dart';
 
 part 'app_state.g.dart';
 
+@LazySingleton()
 class AppState = AppStateBase with _$AppState;
 
 abstract class AppStateBase with Store {

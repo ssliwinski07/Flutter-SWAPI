@@ -5,7 +5,7 @@ import '/core/services/counter_service_base.dart';
 
 part 'counter_store.g.dart';
 
-@injectable
+@LazySingleton()
 class CounterStore = CounterBase with _$CounterStore;
 
 abstract class CounterBase with Store {
