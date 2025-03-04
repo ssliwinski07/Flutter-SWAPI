@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_automatic_di/utils/helpers/consts/consts.dart';
 import 'package:provider/provider.dart';
 
 import 'core/di/service_locator.dart';
 import 'UI/views/counter_view.dart';
 import 'state_management/mobx/central/app_state.dart';
-import '/core/di/service_locator.dart';
+import '/utils/helpers/consts/consts.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
