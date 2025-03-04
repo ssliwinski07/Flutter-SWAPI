@@ -25,8 +25,13 @@ FVM installation (optional):
 - on Windows: choco install fvm
 - fvm install [version]: for example fvm install 3.29.0
 
-Running project:
+Running project with fvm:
 
 - fvm use 3.29.0
 - fvm flutter pub get -> to get dependencies
+- select device and then Run from toolbar: -> start debugging/run without debugging
+
+Running projected withouth fvm:
+
+- flutter pub get -> to get dependencies
 - select device and then Run from toolbar: -> start debugging/run without debugging
