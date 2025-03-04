@@ -7,7 +7,7 @@ Simple flutter project (standard counter app) to test the automatic dependency i
 1. Used packages:
 
 - mobx for state management
-- provider to inject mobx store
+- provider to inject and share mobx store
 - get_it + injectable - service locator and dependency injector
 
 2. Installation
