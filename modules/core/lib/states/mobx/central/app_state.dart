@@ -1,23 +1,21 @@
-import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+import 'package:base_module/interfaces/state_interfaces/app_state_interface.dart';
+import 'package:base_module/interfaces/state_interfaces/counter_module_interface.dart';
 
-import '../modules/counter_module.dart';
-import '/DI/service_locator.dart';
+import '/states/mobx/modules/counter_module.dart';
 
 part 'app_state.g.dart';
 
-@LazySingleton()
 class AppState = AppStateBase with _$AppState;
 
-abstract class AppStateBase with Store {
-  AppStateBase() : _serviceLocator = ServiceLocator();
-
-  final ServiceLocator _serviceLocator;
+abstract class AppStateBase with Store implements AppStateInterface {
+  AppStateBase();
 
   late CounterModule _counterModule;
 
-  CounterModule get counterModule {
-    _counterModule = _serviceLocator.get<CounterModule>();
+  @override
+  CounterModuleInterface get counterModule {
+    _counterModule = CounterModule();
     return _counterModule;
   }
 }

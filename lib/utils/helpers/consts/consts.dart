@@ -1,2 +1,2 @@
-const prodEnv = 'prod';
-const mockEnv = 'mock';
+const prodEnv = 'prodEnv';
+const mockEnv = 'mockEnv';

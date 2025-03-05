@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:connector_module/states/getters/states_getters.dart';
+import 'package:connector_module/states_interfaces.dart';
 
 import '/views/counter_view.dart';
 
@@ -9,9 +10,9 @@ class Root extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = StatesGetters().appState;
+    final AppStateInterface appState = StatesGetters().appState;
 
-    return Provider(
+    return Provider<AppStateInterface>(
       create: (_) => appState,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

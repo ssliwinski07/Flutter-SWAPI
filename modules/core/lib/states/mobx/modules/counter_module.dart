@@ -1,23 +1,26 @@
 import 'package:mobx/mobx.dart';
-import 'package:injectable/injectable.dart';
+import 'package:base_module/interfaces/state_interfaces/counter_module_interface.dart';
+import 'package:base_module/interfaces/state_interfaces/counter_store_interface.dart';
+import 'package:base_module/interfaces/service_interfaces/counter_service_interface.dart';
 
-import '../stores/counter_store.dart';
 import '/DI/service_locator.dart';
+import '/states/mobx/stores/counter_store.dart';
 
 part 'counter_module.g.dart';
 
-@LazySingleton()
 class CounterModule = CounterModuleBase with _$CounterModule;
 
-abstract class CounterModuleBase with Store {
+abstract class CounterModuleBase with Store implements CounterModuleInterface {
   CounterModuleBase() : _serviceLocator = ServiceLocator();
-
-  final ServiceLocator _serviceLocator;
 
   late CounterStore _counterStore;
 
-  CounterStore get counterStore {
-    _counterStore = _serviceLocator.get<CounterStore>();
+  final ServiceLocator _serviceLocator;
+
+  @override
+  CounterStoreInterface get counterStore {
+    _counterStore =
+        CounterStore(_serviceLocator.get<CounterServiceInterface>());
     return _counterStore;
   }
 }

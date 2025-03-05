@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:base_module/interfaces/counter_service_interface.dart';
+import 'package:base_module/interfaces/service_interfaces/counter_service_interface.dart';
 
 import '/utils/helpers/consts.dart';
 

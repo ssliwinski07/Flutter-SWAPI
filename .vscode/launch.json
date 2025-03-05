@@ -1,0 +1,91 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "flutter_automatic_di",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_automatic_di (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_automatic_di (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "UI",
+            "cwd": "modules/UI",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "UI (profile mode)",
+            "cwd": "modules/UI",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "UI (release mode)",
+            "cwd": "modules/UI",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "base",
+            "cwd": "modules/base",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "base (profile mode)",
+            "cwd": "modules/base",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "base (release mode)",
+            "cwd": "modules/base",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "connector",
+            "cwd": "modules/connector",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "connector (profile mode)",
+            "cwd": "modules/connector",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "connector (release mode)",
+            "cwd": "modules/connector",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "core",
+            "cwd": "modules/core",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
