@@ -1,0 +1,15 @@
+name: connector_module
+description: "Connector module"
+version: 1.0.0+1
+publish_to: "none"
+
+environment:
+  sdk: ">=3.4.4 <4.0.0"
+
+dependencies:
+  core_module:
+    path: ../core
+  base_module:
+    path: ../base
+
+dev_dependencies:

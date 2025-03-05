@@ -1,6 +1,6 @@
 # Flutter-AutomaticDI
 
-Simple flutter project (standard counter app) to test the automatic dependency injection.
+Simple flutter project (standard counter app) to test the automatic dependency injection. App is modular (more info below).
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ Simple flutter project (standard counter app) to test the automatic dependency i
 - provider to inject and manage app state
 - get_it + injectable - service locator and dependency injector
 
-2. Installation
+2. Installation and other information
 
    App was built using Flutter 3.29.0 and Dart 3.7.0 + FVM was used to manage flutter and dart versions. FVM is not required to run the project, but you can use it to set the proper flutter and dart versions. Documentation: https://fvm.app/documentation/getting-started
 
@@ -25,17 +25,22 @@ Simple flutter project (standard counter app) to test the automatic dependency i
    - on Windows: choco install fvm
    - fvm install [version]: for example fvm install 3.29.0
 
+   App is splitted into modules, to separate UI from core:
+
+   - base module - contains interfaces
+   - core module - contains dependency injection, interfaces implementation, mobx stores. Depends on base module
+   - UI module - contains widgets. Depends on connector module
+   - connector module - is a bridge between base, core modules and UI module. Contains getters for app state and app dependencies configuration. Depends on base and core modules
+
+   State management is centralized with modules using MobX (modules/core/lib -> states -> mobx). Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. Lazy initialization has been implemented, so specific data stores are not initialized until they are needed.
+
    Running project with FVM:
 
    - fvm use 3.29.0
-   - fvm flutter pub get -> to get dependencies
+   - run `run_build.bat` (on Windows) or `run_build.sh` (on Linux/Mac) -> that will run pub get in all modules to get needed dependencies
    - select device and then Run from toolbar -> start debugging/run without debugging
 
    Running projected withouth FVM:
 
-   - flutter pub get -> to get dependencies
+   - run `run_build_noFVM.bat` (on Windows) or `run_build_noFVM.sh` (on Linux/Mac) -> that will run pub get in all modules to get needed dependencies
    - select device and then Run from toolbar -> start debugging/run without debugging
-
-## NOTES
-
-1. State management is centralized with modules using MobX (lib -> state_management -> mobx). Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. Lazy initialization has been implemented, so specific data stores are not initialized until they are needed.
