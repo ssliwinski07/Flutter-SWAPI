@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../modules/counter_module.dart';
-import '../../../core/di/service_locator.dart';
+import '/DI/service_locator.dart';
 
 part 'app_state.g.dart';
 

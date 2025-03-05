@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+//import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import '../../state_management/mobx/central/app_state.dart';
+//import '../../state_management/mobx/central/app_state.dart';
 
+class CounterView extends StatelessWidget {
+  const CounterView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Counter:',
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: const FloatingActionButton(
+        onPressed: null,
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+/*
 class CounterView extends StatelessWidget {
   const CounterView({super.key});
 
@@ -38,4 +66,4 @@ class CounterView extends StatelessWidget {
       ),
     );
   }
-}
+}*/

@@ -1,7 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../core/services/counter_service_base.dart';
+import 'package:base_module/interfaces/counter_service_interface.dart';
 
 part 'counter_store.g.dart';
 
@@ -11,7 +10,7 @@ class CounterStore = CounterBase with _$CounterStore;
 abstract class CounterBase with Store {
   CounterBase(this._counterService);
 
-  final CounterServiceBase _counterService;
+  final CounterServiceInterface _counterService;
 
   @observable
   int value = 0;

@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../utils/helpers/consts/consts.dart';
+import '/utils/helpers/consts.dart';
 import 'service_locator.config.dart';
 
 @InjectableInit(
