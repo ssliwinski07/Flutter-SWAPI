@@ -11,7 +11,8 @@ part 'counter_module.g.dart';
 class CounterModule = CounterModuleBase with _$CounterModule;
 
 abstract class CounterModuleBase with Store implements CounterModuleInterface {
-  CounterModuleBase() : _serviceLocator = ServiceLocator();
+  CounterModuleBase(ServiceLocator serviceLocator)
+      : _serviceLocator = serviceLocator;
 
   late CounterStore _counterStore;
 

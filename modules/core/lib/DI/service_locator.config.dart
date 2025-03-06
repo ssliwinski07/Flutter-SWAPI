@@ -10,11 +10,16 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:base_module/interfaces/service_interfaces/counter_service_interface.dart'
     as _i229;
+import 'package:base_module/interfaces/service_interfaces/swapi_service_interface.dart'
+    as _i1059;
+import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../networking/modules/network_module.dart' as _i793;
 import '../services/counter_service.dart' as _i1016;
 import '../services/counter_service_mock.dart' as _i270;
+import '../services/swapi_service.dart' as _i505;
 
 const String _mockEnv = 'mockEnv';
 const String _prodEnv = 'prodEnv';
@@ -30,14 +35,25 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    final networkModule = _$NetworkModule();
     gh.lazySingleton<_i229.CounterServiceInterface>(
       () => _i270.CounterServiceMock(),
       registerFor: {_mockEnv},
+    );
+    gh.factory<_i361.Dio>(
+      () => networkModule.dio,
+      instanceName: 'swapi',
     );
     gh.lazySingleton<_i229.CounterServiceInterface>(
       () => _i1016.CounterService(),
       registerFor: {_prodEnv},
     );
+    gh.singleton<_i1059.SwapiServiceInterface>(
+      () => _i505.SwapiService(gh<_i361.Dio>(instanceName: 'swapi')),
+      registerFor: {_prodEnv},
+    );
     return this;
   }
 }
+
+class _$NetworkModule extends _i793.NetworkModule {}

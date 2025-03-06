@@ -4,7 +4,7 @@ import 'package:ui_module/root.dart';
 
 import 'utils/helpers/consts/consts.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // set env parameter with prodEnv or mockEnv to init with prod/mock dependencies

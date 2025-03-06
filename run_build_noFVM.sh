@@ -1,4 +1,4 @@
-directories=("modules/base" "modules/connector" "modules/core" "modules/UI")
+directories=("./" "modules/base" "modules/connector" "modules/core" "modules/UI")
 
 for dir in "${directories[@]}"; do
     if [ -d "$dir" ]; then

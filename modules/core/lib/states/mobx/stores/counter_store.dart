@@ -7,7 +7,8 @@ part 'counter_store.g.dart';
 class CounterStore = CounterBase with _$CounterStore;
 
 abstract class CounterBase with Store implements CounterStoreInterface {
-  CounterBase(this._counterService);
+  CounterBase(CounterServiceInterface counterServiceInterface)
+      : _counterService = counterServiceInterface;
 
   final CounterServiceInterface _counterService;
 
