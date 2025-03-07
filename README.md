@@ -1,6 +1,6 @@
 # Flutter-AutomaticDI
 
-Simple flutter project (standard counter app) to test the automatic dependency injection. App is modular (more info below).
+Simple flutter project (standard counter app with API integration) to test the automatic dependency injection and registring services. App is modular (more info below).
 
 ## Getting Started
 
@@ -8,6 +8,8 @@ Simple flutter project (standard counter app) to test the automatic dependency i
 
 - mobx for state management
 - provider to inject and manage app state
+- retrofit for http requests
+- freezed for data models
 - get_it + injectable - service locator and dependency injector
 
 2. Installation and other information
@@ -32,7 +34,9 @@ Simple flutter project (standard counter app) to test the automatic dependency i
    - UI module - contains widgets. Depends on connector module
    - connector module - is a bridge between base, core modules and UI module. Contains getters for app state and app dependencies configuration. Depends on base and core modules
 
-   State management is centralized with modules using MobX (modules/core/lib -> states -> mobx). Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. Lazy initialization has been implemented, so specific data stores are not initialized until they are needed.
+   State management is centralized with modules using MobX (modules/core/lib -> states -> mobx). Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. Lazy initialization has been implemented, so specific modules/data stores are not initialized until they are needed.
+
+   App was integrated with SWAPI (https://swapi.dev/). It fetches data from SWAPI and displays it in the app. After running app you can see name of first person from SWAPI -> Luke Skywalker (or Mock Person when using mock environment).
 
    Running project with FVM:
 

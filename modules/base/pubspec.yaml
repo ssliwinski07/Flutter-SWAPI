@@ -6,5 +6,10 @@ environment:
   sdk: ">=3.4.4 <4.0.0"
 
 dependencies:
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
+  freezed: ^3.0.3
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.4

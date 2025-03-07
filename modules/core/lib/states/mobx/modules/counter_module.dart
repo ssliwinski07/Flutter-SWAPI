@@ -11,16 +11,18 @@ part 'counter_module.g.dart';
 class CounterModule = CounterModuleBase with _$CounterModule;
 
 abstract class CounterModuleBase with Store implements CounterModuleInterface {
-  CounterModuleBase() : _serviceLocator = ServiceLocator();
-
-  late CounterStore _counterStore;
+  CounterModuleBase(ServiceLocator serviceLocator)
+      : _serviceLocator = serviceLocator;
 
   final ServiceLocator _serviceLocator;
 
+  CounterStore? _counterStore;
+
+  // singleton pattern + lazy conecept using getter, so store is created only when needed
   @override
   CounterStoreInterface get counterStore {
-    _counterStore =
+    _counterStore ??=
         CounterStore(_serviceLocator.get<CounterServiceInterface>());
-    return _counterStore;
+    return _counterStore!;
   }
 }
