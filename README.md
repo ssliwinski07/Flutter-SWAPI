@@ -36,7 +36,7 @@ Simple flutter project (standard counter app with API integration) to test the a
 
    State management is centralized with modules using MobX (modules/core/lib -> states -> mobx). Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. Lazy initialization has been implemented, so specific modules/data stores are not initialized until they are needed.
 
-   App was integrated with SWAPI (https://swapi.dev/). It fetches data from SWAPI and displays it in the app. After running app you can see name of first person from SWAPI -> Luke Skywalker (or Mock Person when using mock environment).
+   App was integrated with SWAPI (https://swapi.dev/). It fetches data from SWAPI and displays it in the app. After running app you can see name of first person from SWAPI -> Luke Skywalker (or Mock Person when using mock environment). You can refresh data (that will be improved).
 
    Running project with FVM:
 
