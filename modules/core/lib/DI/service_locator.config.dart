@@ -20,6 +20,7 @@ import '../networking/modules/network_module.dart' as _i793;
 import '../services/counter_service.dart' as _i1016;
 import '../services/counter_service_mock.dart' as _i270;
 import '../services/swapi_service.dart' as _i505;
+import '../services/swapi_service_mock.dart' as _i796;
 
 const String _mockEnv = 'mockEnv';
 const String _prodEnv = 'prodEnv';
@@ -36,6 +37,10 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final networkModule = _$NetworkModule();
+    gh.singleton<_i1059.SwapiServiceInterface>(
+      () => _i796.SwapiServiceMock(),
+      registerFor: {_mockEnv},
+    );
     gh.lazySingleton<_i229.CounterServiceInterface>(
       () => _i270.CounterServiceMock(),
       registerFor: {_mockEnv},

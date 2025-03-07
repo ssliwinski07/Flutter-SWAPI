@@ -11,12 +11,17 @@ part 'swapi_module.g.dart';
 class SwapiModule = SwapiModuleBase with _$SwapiModule;
 
 abstract class SwapiModuleBase with Store implements SwapiModuleInterface {
-  SwapiModuleBase(ServiceLocator serviceLocator) {
-    _peopleStore = PeopleStore(serviceLocator.get<SwapiServiceInterface>());
-  }
+  SwapiModuleBase(ServiceLocator serviceLocator)
+      : _serviceLocator = serviceLocator;
 
-  late PeopleStore _peopleStore;
+  final ServiceLocator _serviceLocator;
 
+  PeopleStore? _peopleStore;
+
+  // singleton pattern + lazy conecept using getter, so store is created only when needed
   @override
-  PeopleStoreInterface get peopleStore => _peopleStore;
+  PeopleStoreInterface get peopleStore {
+    _peopleStore ??= PeopleStore(_serviceLocator.get<SwapiServiceInterface>());
+    return _peopleStore!;
+  }
 }

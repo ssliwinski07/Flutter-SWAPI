@@ -12,20 +12,24 @@ part 'app_state.g.dart';
 class AppState = AppStateBase with _$AppState;
 
 abstract class AppStateBase with Store implements AppStateInterface {
-  AppStateBase() : _serviceLocator = ServiceLocator() {
-    _swapiModule = SwapiModule(_serviceLocator);
-  }
+  AppStateBase(ServiceLocator serviceLocator)
+      : _serviceLocator = serviceLocator;
 
   final ServiceLocator _serviceLocator;
-  late CounterModule _counterModule;
-  late SwapiModule _swapiModule;
 
+  CounterModule? _counterModule;
+  SwapiModule? _swapiModule;
+
+  // singleton pattern + lazy conecept using getter, so module is created only when needed
   @override
   CounterModuleInterface get counterModule {
-    _counterModule = CounterModule(_serviceLocator);
-    return _counterModule;
+    _counterModule ??= CounterModule(_serviceLocator);
+    return _counterModule!;
   }
 
   @override
-  SwapiModuleInterface get swapiModule => _swapiModule;
+  SwapiModuleInterface get swapiModule {
+    _swapiModule ??= SwapiModule(_serviceLocator);
+    return _swapiModule!;
+  }
 }
