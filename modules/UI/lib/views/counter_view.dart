@@ -24,6 +24,8 @@ class _CounterViewState extends State<CounterView> {
     _peopleStore = Provider.of<AppStateInterface>(context, listen: false)
         .swapiModule
         .peopleStore;
+
+    _fetchData();
   }
 
   @override
@@ -32,36 +34,41 @@ class _CounterViewState extends State<CounterView> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Counter:',
-            ),
-            Observer(
-              builder: (_) => Text(
+      body: Observer(
+        builder: (_) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'Counter:',
+              ),
+              Text(
                 '${_counterStore.value}',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            FutureBuilder(
-              future: _peopleStore.getPeople(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Text(
-                    '${_peopleStore.people?.results?[0].name}',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              if (_peopleStore.people == null)
+                const CircularProgressIndicator()
+              else
+                Text(
+                  '${_peopleStore.people?.results?[0].name}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              _peopleStore.people == null
+                  ? const SizedBox()
+                  : IconButton(
+                      icon: const Icon(Icons.refresh),
+                      onPressed: () async {
+                        await _peopleStore.refreshData();
+                      },
+                    ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -69,5 +76,10 @@ class _CounterViewState extends State<CounterView> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future<void> _fetchData() async {
+    await Future.delayed(const Duration(seconds: 3));
+    await _peopleStore.getPeople();
   }
 }
