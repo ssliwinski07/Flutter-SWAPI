@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:connector_module/states/getters/states_getters.dart';
-import 'package:connector_module/states_interfaces.dart';
+import 'package:connector_module/cubits/factory/cubit_factory.dart';
 
 import '/views/counter_view.dart';
 
 class Root extends StatelessWidget {
-  const Root({super.key});
+  const Root({
+    super.key,
+    required this.cubitFactory,
+  });
+
+  final CubitFactory cubitFactory;
 
   @override
   Widget build(BuildContext context) {
-    final AppStateInterface appState = StatesGetters().appState;
-
-    return Provider<AppStateInterface>(
-      create: (_) => appState,
+    return Provider(
+      create: (context) => cubitFactory,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
