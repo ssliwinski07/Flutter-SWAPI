@@ -10,7 +10,8 @@ void main() async {
 
   // set env parameter with prodEnv or mockEnv to init with prod/mock dependencies
   // by defualt env=prodEnv
-  // if env=prodEnv counter will increase by 1, if env=mockEnv counter will increase by 4
+  // if env=prodEnv app will fetch person's name from SWAPI
+  // if env=mockEnv app will fetch person's name from mock - 'Mock Person' each time
   AppDependenciesFactory().setupDependencies();
 
   final cubitFactory = CubitFactory();

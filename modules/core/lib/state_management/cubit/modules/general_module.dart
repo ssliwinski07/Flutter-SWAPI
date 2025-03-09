@@ -1,6 +1,7 @@
 import 'package:base_module/interfaces/service_interfaces/swapi_service_interface.dart';
 
 import '../cubits/swapi/swapi_cubit.dart';
+import '../cubits/counter/counter_cubit.dart';
 import '/di/service_locator.dart';
 
 class GeneralModule {
@@ -14,11 +15,8 @@ class GeneralModule {
 
   final ServiceLocator _serviceLocator;
 
-  SwapiCubit? _swapiCubit;
+  SwapiCubit get swapiCubit =>
+      SwapiCubit(swapiService: _serviceLocator.get<SwapiServiceInterface>());
 
-  SwapiCubit get swapiCubit {
-    _swapiCubit ??=
-        SwapiCubit(swapiService: _serviceLocator.get<SwapiServiceInterface>());
-    return _swapiCubit!;
-  }
+  CounterCubit get counterCubit => CounterCubit();
 }

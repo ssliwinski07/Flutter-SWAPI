@@ -6,10 +6,10 @@ Simple flutter project (standard counter app with API integration) to test the a
 
 1. Used packages:
 
-- mobx for state management
-- provider to inject and manage app state
+- bloc for state management
+- provider to inject app dependencies
 - retrofit for http requests
-- freezed for data models
+- freezed for data models and for integration with bloc
 - get_it + injectable - service locator and dependency injector
 
 2. Installation and other information
@@ -32,11 +32,11 @@ Simple flutter project (standard counter app with API integration) to test the a
    - base module - contains interfaces
    - core module - contains dependency injection, interfaces implementation, mobx stores. Depends on base module
    - UI module - contains widgets. Depends on connector module
-   - connector module - is a bridge between base, core modules and UI module. Contains getters for app state and app dependencies configuration. Depends on base and core modules
+   - connector module - is a bridge between base, core modules and UI module. Contains getters for cubit modules (CubitFactory) and app dependencies configuration. Depends on base and core modules
 
-   State management is centralized with modules using MobX (modules/core/lib -> states -> mobx). Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. Lazy initialization has been implemented, so specific modules/data stores are not initialized until they are needed.
+   Using BLoC/Cubit for state management (modules/core/lib -> state_management -> cubit). Created modules to group cubits (modules/core/lib -> state_management -> cubit -> modules) and CubitFactory (modules/connector/lib -> cubits -> factory -> cubit_factory.dart) as a container for modules. Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. CubitFactory is a singleton (same as cubit modules). Lazy initialization has been implemented on modules, so they are initialized only when needed with singleton pattern.
 
-   App was integrated with SWAPI (https://swapi.dev/). It fetches data from SWAPI and displays it in the app. After running app you can see name of first person from SWAPI -> Luke Skywalker (or Mock Person when using mock environment). You can refresh data (that will be improved).
+   App was integrated with SWAPI (https://swapi.dev/). It fetches data (random person) and displays person's name in the app. You can refresh data.
 
    Running project with FVM:
 
@@ -48,3 +48,7 @@ Simple flutter project (standard counter app with API integration) to test the a
 
    - run `run_build_noFVM.bat` (on Windows) or `run_build_noFVM.sh` (on Linux/Mac) -> that will run pub get in all modules to get needed dependencies
    - select device and then Run from toolbar -> start debugging/run without debugging
+
+   TO DO:
+
+   - Separate UI module from core module

@@ -21,7 +21,7 @@ dependencies:
   connector_module:
     path: ../connector
   provider: ^6.1.2
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.1.0
   core_module:
     path: ../core
 
