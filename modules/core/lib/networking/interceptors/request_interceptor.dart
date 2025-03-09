@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class RequestInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    List<String> publicEndpoints = ['/people'];
+    List<String> publicEndpoints = ['/people12'];
 
     Map<String, String> defaultHeaders = {
       'Accept': 'application/json',

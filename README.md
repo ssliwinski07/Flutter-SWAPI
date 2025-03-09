@@ -36,7 +36,7 @@ Simple flutter project (standard counter app with API integration) to test the a
 
    Using BLoC/Cubit for state management (modules/core/lib -> state_management -> cubit). Created modules to group cubits (modules/core/lib -> state_management -> cubit -> modules) and CubitFactory (modules/connector/lib -> cubits -> factory -> cubit_factory.dart) as a container for modules. Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. CubitFactory is a singleton (same as cubit modules). Lazy initialization has been implemented on modules, so they are initialized only when needed with singleton pattern.
 
-   App was integrated with SWAPI (https://swapi.dev/). It fetches data (random person) and displays person's name in the app. You can refresh data.
+   App was integrated with SWAPI (https://swapi.dev/). It fetches data (random person) and displays person's name in the app. You can refresh data. Simple http requests logging is available.
 
    Running project with FVM:
 
