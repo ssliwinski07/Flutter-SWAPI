@@ -1,28 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:connector_module/cubits/factory/cubit_factory.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:connector_module/exports/base_models.dart';
+import 'package:state_module/cubit/factory/cubit_factory.dart';
+import 'package:state_module/cubit/cubits/initialization/app_initialization_cubit.dart';
 
-import '/views/counter_view.dart';
+import 'views/main_view.dart';
 
-class Root extends StatelessWidget {
+class Root extends StatefulWidget {
   const Root({
     super.key,
-    required this.cubitFactory,
   });
 
-  final CubitFactory cubitFactory;
+  @override
+  State<Root> createState() => _RootState();
+}
+
+class _RootState extends State<Root> {
+  late CubitFactory _cubitFactory;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubitFactory = CubitFactory();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (context) => cubitFactory,
+      create: (context) => _cubitFactory,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
           useMaterial3: true,
         ),
-        home: const CounterView(),
+        home: BlocProvider(
+          create: (_) => _cubitFactory.generalModule.appInitializationCubit
+            ..initializeApp(),
+          child: BlocBuilder<AppInitializationCubit, AppInitalizationState>(
+            builder: (context, state) {
+              switch (state) {
+                case Loading():
+                  return const Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                case Initialized():
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) => _cubitFactory.generalModule
+                            .selectionCubit<PeopleModel>(),
+                      ),
+                      BlocProvider(
+                          create: (_) =>
+                              _cubitFactory.generalModule.swapiCubit),
+                    ],
+                    child: const MainView(),
+                  );
+                case Error():
+                  return const SizedBox.shrink();
+              }
+            },
+          ),
+        ),
       ),
     );
   }
