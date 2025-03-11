@@ -61,7 +61,14 @@ class _RootState extends State<Root> {
                     child: const MainView(),
                   );
                 case Error():
-                  return const SizedBox.shrink();
+                  return const Scaffold(
+                    body: Center(
+                      child: Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
+                    ),
+                  );
               }
             },
           ),
