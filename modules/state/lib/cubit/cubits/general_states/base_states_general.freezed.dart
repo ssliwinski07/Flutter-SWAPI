@@ -220,4 +220,68 @@ class Initialized<T> implements BaseStates<T> {
   }
 }
 
+/// @nodoc
+
+class Selected<T> implements BaseStates<T> {
+  const Selected(this.value);
+
+  final T? value;
+
+  /// Create a copy of BaseStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $SelectedCopyWith<T, Selected<T>> get copyWith =>
+      _$SelectedCopyWithImpl<T, Selected<T>>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Selected<T> &&
+            const DeepCollectionEquality().equals(other.value, value));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+
+  @override
+  String toString() {
+    return 'BaseStates<$T>.selected(value: $value)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $SelectedCopyWith<T, $Res>
+    implements $BaseStatesCopyWith<T, $Res> {
+  factory $SelectedCopyWith(
+          Selected<T> value, $Res Function(Selected<T>) _then) =
+      _$SelectedCopyWithImpl;
+  @useResult
+  $Res call({T? value});
+}
+
+/// @nodoc
+class _$SelectedCopyWithImpl<T, $Res> implements $SelectedCopyWith<T, $Res> {
+  _$SelectedCopyWithImpl(this._self, this._then);
+
+  final Selected<T> _self;
+  final $Res Function(Selected<T>) _then;
+
+  /// Create a copy of BaseStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? value = freezed,
+  }) {
+    return _then(Selected<T>(
+      freezed == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as T?,
+    ));
+  }
+}
+
 // dart format on

@@ -1,12 +1,16 @@
 import 'package:base_module/models/people/all_people.dart';
+import 'package:base_module/models/people/people_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:state_module/cubit/cubits/general_states/base_states_general.dart';
-
 import 'package:base_module/interfaces/service_interfaces.dart';
 
-class SwapiCubit extends Cubit<BaseStates<AllPeopleModel>> {
-  SwapiCubit({required SwapiServiceInterface swapiService})
-      : _swapiService = swapiService,
+import '../../mixins/selection_mixin.dart';
+
+class SwapiCubit extends Cubit<BaseStates<AllPeopleModel>>
+    with SelectionMixin<AllPeopleModel> {
+  SwapiCubit({
+    required SwapiServiceInterface swapiService,
+  })  : _swapiService = swapiService,
         super(const BaseStates.initial());
 
   final SwapiServiceInterface _swapiService;

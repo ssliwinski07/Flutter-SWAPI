@@ -73,22 +73,20 @@ class _MainViewState extends State<MainView> {
                       infoType: InfoType.success);
                 });
 
-                return BlocBuilder<SelectionCubit<PeopleModel>, PeopleModel?>(
-                  builder: (context, selectedItem) {
+                return BlocBuilder<SwapiCubit, BaseStates<AllPeopleModel>>(
+                  builder: (context, state) {
                     return ListView.builder(
-                        padding: const EdgeInsets.all(10),
-                        itemCount: data.results?.length,
-                        itemBuilder: (context, index) {
-                          final person = data.results?[index];
-                          final isSelected = person == selectedItem;
-                          return ListTile(
-                              title: Text(person?.name ?? ''),
-                              selectedColor: Colors.red,
-                              splashColor: Colors.transparent,
-                              selected: isSelected,
-                              onTap: () =>
-                                  _selectionCubit.selectItem(value: person!));
-                        });
+                      padding: const EdgeInsets.all(10),
+                      itemCount: data.results?.length,
+                      itemBuilder: (context, index) {
+                        final person = data.results?[index];
+
+                        return ListTile(
+                          title: Text(person?.name ?? ''),
+                          splashColor: Colors.transparent,
+                        );
+                      },
+                    );
                   },
                 );
               case Error(:final error):

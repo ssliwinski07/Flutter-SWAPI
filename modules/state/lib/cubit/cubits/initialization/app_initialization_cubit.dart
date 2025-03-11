@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:connector_module/dependencies/factory/app_dependencies_factory.dart';
 import 'package:state_module/cubit/cubits/general_states/base_states_general.dart';
 

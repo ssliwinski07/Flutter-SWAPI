@@ -7,4 +7,5 @@ sealed class BaseStates<T> with _$BaseStates<T> {
   const factory BaseStates.loaded(T? data) = Loaded<T>;
   const factory BaseStates.error(String? error) = Error<T>;
   const factory BaseStates.initialized() = Initialized<T>;
+  const factory BaseStates.selected(T? value) = Selected<T>;
 }
