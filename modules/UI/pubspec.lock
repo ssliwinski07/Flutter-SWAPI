@@ -120,7 +120,7 @@ packages:
     source: hosted
     version: "3.1.2"
   core_module:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "../core"
       relative: true
@@ -397,6 +397,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.12.1"
+  state_module:
+    dependency: "direct main"
+    description:
+      path: "../state"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   stream_channel:
     dependency: transitive
     description:

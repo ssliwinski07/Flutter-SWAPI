@@ -5,9 +5,11 @@ import '../../helpers/consts.dart';
 class AppDependenciesFactory {
   AppDependenciesFactory._();
 
-  static AppDependenciesFactory? _instance;
+  static final AppDependenciesFactory _instance = AppDependenciesFactory._();
 
-  factory AppDependenciesFactory() => _instance ??= AppDependenciesFactory._();
+  factory AppDependenciesFactory() => _instance;
+
+  ServiceLocator get serviceLocator => ServiceLocator();
 
   void setupDependencies({String env = prodEnv}) =>
       configureDependencies(env: env);
