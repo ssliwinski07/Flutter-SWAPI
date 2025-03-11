@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:connector_module/exports/base_models.dart';
 import 'package:state_module/cubit/factory/cubit_factory.dart';
 import 'package:state_module/cubit/cubits/initialization/app_initialization_cubit.dart';
+import 'package:state_module/cubit/cubits/general_states/base_states_general.dart';
 
 import 'views/main_view.dart';
 
@@ -38,7 +39,7 @@ class _RootState extends State<Root> {
         home: BlocProvider(
           create: (_) => _cubitFactory.generalModule.appInitializationCubit
             ..initializeApp(),
-          child: BlocBuilder<AppInitializationCubit, AppInitalizationState>(
+          child: BlocBuilder<AppInitializationCubit, BaseStates>(
             builder: (context, state) {
               switch (state) {
                 case Loading():
@@ -69,6 +70,8 @@ class _RootState extends State<Root> {
                       ),
                     ),
                   );
+                default:
+                  return const SizedBox.shrink();
               }
             },
           ),

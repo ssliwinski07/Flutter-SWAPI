@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'swapi_cubit.dart';
+part of 'base_states_general.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,11 +14,11 @@ part of 'swapi_cubit.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$SwapiState {
+mixin _$BaseStates<T> {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SwapiState);
+        (other.runtimeType == runtimeType && other is BaseStates<T>);
   }
 
   @override
@@ -26,24 +26,24 @@ mixin _$SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState()';
+    return 'BaseStates<$T>()';
   }
 }
 
 /// @nodoc
-class $SwapiStateCopyWith<$Res> {
-  $SwapiStateCopyWith(SwapiState _, $Res Function(SwapiState) __);
+class $BaseStatesCopyWith<T, $Res> {
+  $BaseStatesCopyWith(BaseStates<T> _, $Res Function(BaseStates<T>) __);
 }
 
 /// @nodoc
 
-class Initial implements SwapiState {
+class Initial<T> implements BaseStates<T> {
   const Initial();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is Initial<T>);
   }
 
   @override
@@ -51,19 +51,19 @@ class Initial implements SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState.initial()';
+    return 'BaseStates<$T>.initial()';
   }
 }
 
 /// @nodoc
 
-class Loading implements SwapiState {
+class Loading<T> implements BaseStates<T> {
   const Loading();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Loading);
+        (other.runtimeType == runtimeType && other is Loading<T>);
   }
 
   @override
@@ -71,107 +71,92 @@ class Loading implements SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState.loading()';
+    return 'BaseStates<$T>.loading()';
   }
 }
 
 /// @nodoc
 
-class Loaded implements SwapiState {
-  const Loaded(this.people);
+class Loaded<T> implements BaseStates<T> {
+  const Loaded(this.data);
 
-  final AllPeopleModel? people;
+  final T? data;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of BaseStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $LoadedCopyWith<Loaded> get copyWith =>
-      _$LoadedCopyWithImpl<Loaded>(this, _$identity);
+  $LoadedCopyWith<T, Loaded<T>> get copyWith =>
+      _$LoadedCopyWithImpl<T, Loaded<T>>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Loaded &&
-            (identical(other.people, people) || other.people == people));
+            other is Loaded<T> &&
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, people);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
   @override
   String toString() {
-    return 'SwapiState.loaded(people: $people)';
+    return 'BaseStates<$T>.loaded(data: $data)';
   }
 }
 
 /// @nodoc
-abstract mixin class $LoadedCopyWith<$Res>
-    implements $SwapiStateCopyWith<$Res> {
-  factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) =
+abstract mixin class $LoadedCopyWith<T, $Res>
+    implements $BaseStatesCopyWith<T, $Res> {
+  factory $LoadedCopyWith(Loaded<T> value, $Res Function(Loaded<T>) _then) =
       _$LoadedCopyWithImpl;
   @useResult
-  $Res call({AllPeopleModel? people});
-
-  $AllPeopleModelCopyWith<$Res>? get people;
+  $Res call({T? data});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
+class _$LoadedCopyWithImpl<T, $Res> implements $LoadedCopyWith<T, $Res> {
   _$LoadedCopyWithImpl(this._self, this._then);
 
-  final Loaded _self;
-  final $Res Function(Loaded) _then;
+  final Loaded<T> _self;
+  final $Res Function(Loaded<T>) _then;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of BaseStates
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? people = freezed,
+    Object? data = freezed,
   }) {
-    return _then(Loaded(
-      freezed == people
-          ? _self.people
-          : people // ignore: cast_nullable_to_non_nullable
-              as AllPeopleModel?,
+    return _then(Loaded<T>(
+      freezed == data
+          ? _self.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T?,
     ));
-  }
-
-  /// Create a copy of SwapiState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AllPeopleModelCopyWith<$Res>? get people {
-    if (_self.people == null) {
-      return null;
-    }
-
-    return $AllPeopleModelCopyWith<$Res>(_self.people!, (value) {
-      return _then(_self.copyWith(people: value));
-    });
   }
 }
 
 /// @nodoc
 
-class Error implements SwapiState {
+class Error<T> implements BaseStates<T> {
   const Error(this.error);
 
   final String? error;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of BaseStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ErrorCopyWith<Error> get copyWith =>
-      _$ErrorCopyWithImpl<Error>(this, _$identity);
+  $ErrorCopyWith<T, Error<T>> get copyWith =>
+      _$ErrorCopyWithImpl<T, Error<T>>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Error &&
+            other is Error<T> &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -180,37 +165,58 @@ class Error implements SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState.error(error: $error)';
+    return 'BaseStates<$T>.error(error: $error)';
   }
 }
 
 /// @nodoc
-abstract mixin class $ErrorCopyWith<$Res> implements $SwapiStateCopyWith<$Res> {
-  factory $ErrorCopyWith(Error value, $Res Function(Error) _then) =
+abstract mixin class $ErrorCopyWith<T, $Res>
+    implements $BaseStatesCopyWith<T, $Res> {
+  factory $ErrorCopyWith(Error<T> value, $Res Function(Error<T>) _then) =
       _$ErrorCopyWithImpl;
   @useResult
   $Res call({String? error});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
+class _$ErrorCopyWithImpl<T, $Res> implements $ErrorCopyWith<T, $Res> {
   _$ErrorCopyWithImpl(this._self, this._then);
 
-  final Error _self;
-  final $Res Function(Error) _then;
+  final Error<T> _self;
+  final $Res Function(Error<T>) _then;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of BaseStates
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(Error(
+    return _then(Error<T>(
       freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+}
+
+/// @nodoc
+
+class Initialized<T> implements BaseStates<T> {
+  const Initialized();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Initialized<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'BaseStates<$T>.initialized()';
   }
 }
 
