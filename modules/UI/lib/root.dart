@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:connector_module/exports/base_models.dart';
 import 'package:state_module/cubit/factory/cubit_factory.dart';
 import 'package:state_module/cubit/cubits/initialization/app_initialization_cubit.dart';
-import 'package:state_module/cubit/cubits/general_states/base_states_general.dart';
+import 'package:state_module/cubit/cubits/generics/selection_cubit.dart';
 
 import 'views/main_view.dart';
 
@@ -39,7 +39,7 @@ class _RootState extends State<Root> {
         home: BlocProvider(
           create: (_) => _cubitFactory.generalModule.appInitializationCubit
             ..initializeApp(),
-          child: BlocBuilder<AppInitializationCubit, BaseStates>(
+          child: BlocBuilder<AppInitializationCubit, AppInitalizationState>(
             builder: (context, state) {
               switch (state) {
                 case Loading():
@@ -52,12 +52,16 @@ class _RootState extends State<Root> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
+                        create: (_) => _cubitFactory.generalModule.swapiCubit,
+                      ),
+                      BlocProvider(
                         create: (_) => _cubitFactory.generalModule
                             .selectionCubit<PeopleModel>(),
                       ),
                       BlocProvider(
-                          create: (_) =>
-                              _cubitFactory.generalModule.swapiCubit),
+                        create: (_) => _cubitFactory.generalModule
+                            .multiSelectionCubit<PeopleModel>(),
+                      )
                     ],
                     child: const MainView(),
                   );
@@ -70,8 +74,6 @@ class _RootState extends State<Root> {
                       ),
                     ),
                   );
-                default:
-                  return const SizedBox.shrink();
               }
             },
           ),

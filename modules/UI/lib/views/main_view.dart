@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:connector_module/exports/base_models.dart';
 import 'package:state_module/cubit/cubits/swapi/swapi_cubit.dart';
-import 'package:state_module/cubit/cubits/general_states/base_states_general.dart';
 import 'package:state_module/cubit/cubits/generics/selection_cubit.dart';
+import 'package:state_module/cubit/cubits/generics/multi_selection_cubit.dart';
 
 import '/toast/custom_toast.dart';
 import '/utils/helpers/enums.dart';
@@ -16,43 +16,42 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  late SelectionCubit<PeopleModel> _selectionCubit;
   late SwapiCubit _swapiCubit;
+  late SelectionCubit _selectionCubit;
+  late MultiSelectionCubit _multiSelectionCubit;
 
   @override
   void initState() {
     super.initState();
-    _selectionCubit = context.read<SelectionCubit<PeopleModel>>();
     _swapiCubit = context.read<SwapiCubit>();
+    _selectionCubit = context.read<SelectionCubit<PeopleModel>>();
+    _multiSelectionCubit = context.read<MultiSelectionCubit<PeopleModel>>();
 
-    _swapiCubit.fetchPerson();
+    _swapiCubit.fetchPeople();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BlocBuilder<SwapiCubit, BaseStates<AllPeopleModel>>(
-            builder: (context, state) {
+        title: BlocBuilder<SwapiCubit, SwapiStates>(builder: (context, state) {
           return IconButton(
               icon: const Icon(Icons.refresh, size: 30),
               onPressed: state is Loaded
                   ? () async {
-                      _swapiCubit.fetchPerson();
+                      _swapiCubit.fetchPeople();
                     }
                   : null);
         }),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
-        child: BlocBuilder<SwapiCubit, BaseStates<AllPeopleModel>>(
+        child: BlocBuilder<SwapiCubit, SwapiStates>(
           builder: (context, state) {
             switch (state) {
-              case Initial():
-                return const SizedBox.shrink();
               case Loading():
                 return const CircularProgressIndicator.adaptive();
-              case Loaded(:final data):
+              case Loaded(:final data as AllPeopleModel?):
                 if (data == null) {
                   return const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -73,17 +72,24 @@ class _MainViewState extends State<MainView> {
                       infoType: InfoType.success);
                 });
 
-                return BlocBuilder<SwapiCubit, BaseStates<AllPeopleModel>>(
-                  builder: (context, state) {
+                return BlocBuilder<MultiSelectionCubit<PeopleModel>,
+                    Set<PeopleModel>>(
+                  builder: (context, selectedItems) {
                     return ListView.builder(
                       padding: const EdgeInsets.all(10),
                       itemCount: data.results?.length,
                       itemBuilder: (context, index) {
                         final person = data.results?[index];
+                        final isSelected = selectedItems.contains(person);
 
                         return ListTile(
                           title: Text(person?.name ?? ''),
                           splashColor: Colors.transparent,
+                          selectedColor: Colors.red,
+                          selected: isSelected,
+                          onTap: () {
+                            _multiSelectionCubit.selectItems(item: person!);
+                          },
                         );
                       },
                     );
@@ -112,7 +118,7 @@ class _MainViewState extends State<MainView> {
                       const SizedBox(height: 5),
                       IconButton(
                         icon: const Icon(Icons.refresh),
-                        onPressed: () => _swapiCubit.fetchPerson(),
+                        onPressed: () => _swapiCubit.fetchPeople(),
                       )
                     ],
                   );

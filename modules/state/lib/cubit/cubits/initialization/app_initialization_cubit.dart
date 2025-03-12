@@ -1,19 +1,22 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:connector_module/dependencies/factory/app_dependencies_factory.dart';
-import 'package:state_module/cubit/cubits/general_states/base_states_general.dart';
 
-class AppInitializationCubit extends Cubit<BaseStates> {
-  AppInitializationCubit() : super(const BaseStates.loading());
+part 'app_initialization_state.dart';
+part 'app_initialization_cubit.freezed.dart';
+
+class AppInitializationCubit extends Cubit<AppInitalizationState> {
+  AppInitializationCubit() : super(const AppInitalizationState.loading());
 
   Future<void> initializeApp() async {
     try {
-      emit(const BaseStates.loading());
+      emit(const AppInitalizationState.loading());
       // loading simulation
       await Future.delayed(const Duration(seconds: 4));
       _setupDependencies();
-      emit(const BaseStates.initialized());
+      emit(const AppInitalizationState.initialized());
     } catch (e) {
-      emit(BaseStates.error(e.toString()));
+      emit(AppInitalizationState.error(e.toString()));
     }
   }
 
@@ -21,3 +24,5 @@ class AppInitializationCubit extends Cubit<BaseStates> {
     AppDependenciesFactory().setupDependencies();
   }
 }
+
+
