@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:connector_module/exports/base_models.dart';
 import 'package:state_module/cubit/factory/cubit_factory.dart';
 import 'package:state_module/cubit/cubits/initialization/app_initialization_cubit.dart';
-import 'package:state_module/cubit/cubits/generics/selection_cubit.dart';
 
 import 'views/main_view.dart';
 

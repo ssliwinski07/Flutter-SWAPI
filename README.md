@@ -39,6 +39,8 @@ App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays 
 
    Simple http requests logging is available.
 
+   You can select/deselect multiply items on the list - after refreshing the list, selection stays.
+
    Running project with FVM:
 
    - fvm use 3.29.0

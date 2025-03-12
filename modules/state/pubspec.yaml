@@ -16,7 +16,6 @@ dependencies:
   bloc: ^9.0.0
   freezed: ^3.0.3
   freezed_annotation: ^3.0.0
-  dartz: ^0.10.1
   base_module:
     path: ../base
   core_module:
