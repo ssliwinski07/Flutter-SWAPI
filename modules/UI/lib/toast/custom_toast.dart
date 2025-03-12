@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '/utils/helpers/enums.dart';
 
+// that should be created as a service, but for now it is a simple function
+
 void showCustomToast({
   required BuildContext context,
   required String message,

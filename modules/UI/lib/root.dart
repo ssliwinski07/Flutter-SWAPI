@@ -51,12 +51,16 @@ class _RootState extends State<Root> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
+                        create: (_) => _cubitFactory.generalModule.swapiCubit,
+                      ),
+                      BlocProvider(
                         create: (_) => _cubitFactory.generalModule
                             .selectionCubit<PeopleModel>(),
                       ),
                       BlocProvider(
-                          create: (_) =>
-                              _cubitFactory.generalModule.swapiCubit),
+                        create: (_) => _cubitFactory.generalModule
+                            .multiSelectionCubit<PeopleModel>(),
+                      )
                     ],
                     child: const MainView(),
                   );

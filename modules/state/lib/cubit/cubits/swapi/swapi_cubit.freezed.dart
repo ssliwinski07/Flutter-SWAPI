@@ -14,11 +14,11 @@ part of 'swapi_cubit.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$SwapiState {
+mixin _$SwapiStates {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SwapiState);
+        (other.runtimeType == runtimeType && other is SwapiStates);
   }
 
   @override
@@ -26,18 +26,18 @@ mixin _$SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState()';
+    return 'SwapiStates()';
   }
 }
 
 /// @nodoc
-class $SwapiStateCopyWith<$Res> {
-  $SwapiStateCopyWith(SwapiState _, $Res Function(SwapiState) __);
+class $SwapiStatesCopyWith<$Res> {
+  $SwapiStatesCopyWith(SwapiStates _, $Res Function(SwapiStates) __);
 }
 
 /// @nodoc
 
-class Initial implements SwapiState {
+class Initial implements SwapiStates {
   const Initial();
 
   @override
@@ -51,13 +51,13 @@ class Initial implements SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState.initial()';
+    return 'SwapiStates.initial()';
   }
 }
 
 /// @nodoc
 
-class Loading implements SwapiState {
+class Loading implements SwapiStates {
   const Loading();
 
   @override
@@ -71,18 +71,18 @@ class Loading implements SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState.loading()';
+    return 'SwapiStates.loading()';
   }
 }
 
 /// @nodoc
 
-class Loaded implements SwapiState {
-  const Loaded(this.people);
+class Loaded implements SwapiStates {
+  const Loaded(this.data);
 
-  final AllPeopleModel? people;
+  final Object? data;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of SwapiStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -94,27 +94,26 @@ class Loaded implements SwapiState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Loaded &&
-            (identical(other.people, people) || other.people == people));
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, people);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
   @override
   String toString() {
-    return 'SwapiState.loaded(people: $people)';
+    return 'SwapiStates.loaded(data: $data)';
   }
 }
 
 /// @nodoc
 abstract mixin class $LoadedCopyWith<$Res>
-    implements $SwapiStateCopyWith<$Res> {
+    implements $SwapiStatesCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) =
       _$LoadedCopyWithImpl;
   @useResult
-  $Res call({AllPeopleModel? people});
-
-  $AllPeopleModelCopyWith<$Res>? get people;
+  $Res call({Object? data});
 }
 
 /// @nodoc
@@ -124,43 +123,26 @@ class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
   final Loaded _self;
   final $Res Function(Loaded) _then;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of SwapiStates
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? people = freezed,
+    Object? data = freezed,
   }) {
     return _then(Loaded(
-      freezed == people
-          ? _self.people
-          : people // ignore: cast_nullable_to_non_nullable
-              as AllPeopleModel?,
+      freezed == data ? _self.data : data,
     ));
-  }
-
-  /// Create a copy of SwapiState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AllPeopleModelCopyWith<$Res>? get people {
-    if (_self.people == null) {
-      return null;
-    }
-
-    return $AllPeopleModelCopyWith<$Res>(_self.people!, (value) {
-      return _then(_self.copyWith(people: value));
-    });
   }
 }
 
 /// @nodoc
 
-class Error implements SwapiState {
+class Error implements SwapiStates {
   const Error(this.error);
 
   final String? error;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of SwapiStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -180,12 +162,13 @@ class Error implements SwapiState {
 
   @override
   String toString() {
-    return 'SwapiState.error(error: $error)';
+    return 'SwapiStates.error(error: $error)';
   }
 }
 
 /// @nodoc
-abstract mixin class $ErrorCopyWith<$Res> implements $SwapiStateCopyWith<$Res> {
+abstract mixin class $ErrorCopyWith<$Res>
+    implements $SwapiStatesCopyWith<$Res> {
   factory $ErrorCopyWith(Error value, $Res Function(Error) _then) =
       _$ErrorCopyWithImpl;
   @useResult
@@ -199,7 +182,7 @@ class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
   final Error _self;
   final $Res Function(Error) _then;
 
-  /// Create a copy of SwapiState
+  /// Create a copy of SwapiStates
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
