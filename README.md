@@ -1,4 +1,4 @@
-# Flutter-AutomaticDI
+# Flutter-SWAPI
 
 App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays it as a list. You can refresh data. You can also select/deselect multiply items on the list and go to the second screen to see details about selected people. When fetching data fails, you will see proper message.
 
