@@ -52,4 +52,4 @@ App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays 
 
    TO DO:
 
-   - add more customized widgets to UI module to reduce amount of the code in one file and make it more readable - for example ElevatedButton or ListView.builder. Plus, thank to that widgets could be reused.
+   - add more customized widgets to UI module to reduce amount of the code and make code more readable and clean - for example custom widgets for ElevatedButton or ListView.builder. Plus, thanks to that widgets could be reused.
