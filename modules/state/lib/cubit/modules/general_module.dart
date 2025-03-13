@@ -3,7 +3,6 @@ import 'package:core_module/di/service_locator.dart';
 
 import '../cubits/swapi/swapi_cubit.dart';
 import '../cubits/generics/selection_cubit.dart';
-import '../cubits/generics/multi_selection_cubit.dart';
 import '../cubits/initialization/app_initialization_cubit.dart';
 
 class GeneralModule {
@@ -23,6 +22,4 @@ class GeneralModule {
   AppInitializationCubit get appInitializationCubit => AppInitializationCubit();
 
   SelectionCubit<T> selectionCubit<T>() => SelectionCubit<T>();
-
-  MultiSelectionCubit<T> multiSelectionCubit<T>() => MultiSelectionCubit<T>();
 }

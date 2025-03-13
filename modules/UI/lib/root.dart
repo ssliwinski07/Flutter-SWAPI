@@ -56,10 +56,6 @@ class _RootState extends State<Root> {
                       BlocProvider(
                         create: (_) => _cubitFactory.generalModule
                             .selectionCubit<PeopleModel>(),
-                      ),
-                      BlocProvider(
-                        create: (_) => _cubitFactory.generalModule
-                            .multiSelectionCubit<PeopleModel>(),
                       )
                     ],
                     child: const MainView(),

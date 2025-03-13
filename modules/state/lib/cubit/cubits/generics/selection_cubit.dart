@@ -1,17 +1,38 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SelectionCubit<T> extends Cubit<T?> {
-  SelectionCubit() : super(null);
+part 'selection_cubit.freezed.dart';
+part 'selection_states.dart';
 
-  void selectItem({required T? item}) {
-    emit(item);
-  }
+class SelectionCubit<T> extends Cubit<SelectionStates<T>> {
+  SelectionCubit() : super(const SelectionStates.initial());
+
+  void selectItem({required T? item}) {}
 
   void deselectItem() {
-    emit(null);
+    emit(const MultiSelection(items: {}));
   }
 
-  void toggleSelection({required T item}) {
-    emit(state == item ? null : item);
+  void toggleMultiSelection({required T item}) {
+    Set<T> selectedItems = state is MultiSelection<T>
+        ? Set<T>.from((state as MultiSelection<T>).items)
+        : {};
+
+    if (selectedItems.contains(item)) {
+      selectedItems.remove(item);
+    } else {
+      selectedItems.add(item);
+    }
+
+    emit(MultiSelection(items: selectedItems));
+  }
+
+  void toggleSingleSelection({required T item}) {
+    if ((state is SingleSelection<T>) &&
+        (state as SingleSelection<T>).item == item) {
+      emit(const SelectionStates.initial());
+    } else {
+      emit(SingleSelection(item: item));
+    }
   }
 }
