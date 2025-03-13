@@ -1,6 +1,6 @@
 # Flutter-AutomaticDI
 
-App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays it as a list. You can refresh data.
+App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays it as a list. You can refresh data. You can also select/deselect multiply items on the list and go to the second screen to see details about selected people. When fetching data fails, you will see proper message.
 
 ## Getting Started
 
@@ -39,8 +39,6 @@ App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays 
 
    Simple http requests logging is available.
 
-   You can select/deselect multiply items on the list - after refreshing the list, selection stays.
-
    Running project with FVM:
 
    - fvm use 3.29.0
@@ -51,3 +49,7 @@ App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays 
 
    - run `run_build_noFVM.bat` (on Windows) or `run_build_noFVM.sh` (on Linux/Mac) -> that will run pub get in all modules to get needed dependencies
    - select device and then Run from toolbar -> start debugging/run without debugging
+
+   TO DO:
+
+   - add more customized widgets to UI module to reduce amount of the code in one file and make it more readable - for example ElevatedButton or ListView.builder. Plus, thank to that widgets could be reused.
