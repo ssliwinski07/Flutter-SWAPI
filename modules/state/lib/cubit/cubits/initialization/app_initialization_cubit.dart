@@ -24,5 +24,3 @@ class AppInitializationCubit extends Cubit<AppInitalizationState> {
     AppDependenciesFactory().setupDependencies();
   }
 }
-
-

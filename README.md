@@ -7,6 +7,7 @@ App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays 
 1. Used packages:
 
 - bloc for state management
+- go_router for navigation
 - provider to inject app dependencies
 - retrofit for http requests
 - freezed for data models and for integration with bloc

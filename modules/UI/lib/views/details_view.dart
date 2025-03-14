@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:connector_module/exports/base_models.dart';
-
+import 'package:go_router/go_router.dart';
 import '/widgets/cards/card_details.dart';
 
 class DetailsView extends StatelessWidget {
@@ -11,7 +11,18 @@ class DetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          leading: IconButton(
+        icon: const Icon(
+          Icons.arrow_back,
+        ),
+        style: const ButtonStyle(
+          overlayColor: WidgetStatePropertyAll(Colors.transparent),
+        ),
+        onPressed: () {
+          context.pop();
+        },
+      )),
       body: Center(
         child: items.isNotEmpty
             ? Padding(

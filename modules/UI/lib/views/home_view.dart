@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:connector_module/exports/base_models.dart';
 import 'package:state_module/cubit/cubits/swapi/swapi_cubit.dart';
 import 'package:state_module/cubit/cubits/generics/selection_cubit.dart';
 
-import '../views/details_view.dart';
 import '/toast/custom_toast.dart';
 import '/utils/helpers/enums.dart';
 import '/widgets/customs/custom_error.dart';
 import '/widgets/customs/custom_no_data.dart';
 
-class MainView extends StatefulWidget {
-  const MainView({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<MainView> createState() => _MainViewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _MainViewState extends State<MainView> {
+class _HomeViewState extends State<HomeView> {
   late SwapiCubit _swapiCubit;
   late SelectionCubit _selectionCubit;
 
@@ -81,12 +82,7 @@ class _MainViewState extends State<MainView> {
                     icon: const Icon(Icons.arrow_forward),
                     onPressed: state is Loaded && data != null
                         ? () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailsView(items: items),
-                              ),
-                            );
+                            context.push('/details', extra: items);
                           }
                         : null,
                   ),
