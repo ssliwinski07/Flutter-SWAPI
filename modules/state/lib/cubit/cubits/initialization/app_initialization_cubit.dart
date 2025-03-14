@@ -6,11 +6,10 @@ part 'app_initialization_state.dart';
 part 'app_initialization_cubit.freezed.dart';
 
 class AppInitializationCubit extends Cubit<AppInitalizationState> {
-  AppInitializationCubit() : super(const AppInitalizationState.loading());
+  AppInitializationCubit() : super(const AppInitalizationState.initial());
 
   Future<void> initializeApp() async {
     try {
-      emit(const AppInitalizationState.loading());
       // loading simulation
       await Future.delayed(const Duration(seconds: 4));
       _setupDependencies();

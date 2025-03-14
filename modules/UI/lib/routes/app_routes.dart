@@ -1,25 +1,58 @@
 import 'package:go_router/go_router.dart';
 import 'package:connector_module/exports/base_models.dart';
+import 'package:flutter/material.dart';
+import 'package:state_module/cubit/cubits/auth/auth_cubit.dart';
 
 import '../views/details_view.dart';
-import '../views/initialization_view.dart';
+import '../views/loading_view.dart';
+import '../views/home_view.dart';
+import '../views/login_view.dart';
 
 class AppRoutes {
-  AppRoutes._();
+  AppRoutes._({
+    required AuthCubit authCubit,
+  }) : _authCubit = authCubit;
 
-  static final instance = AppRoutes._();
+  static AppRoutes? instance;
 
-  factory AppRoutes() => instance;
+  factory AppRoutes({required AuthCubit authCubit}) {
+    instance ??= AppRoutes._(authCubit: authCubit);
+    return instance!;
+  }
+
+  final AuthCubit _authCubit;
 
   GoRouter? _goRouter;
 
   GoRouter get goRouter => _goRouter ??= GoRouter(
-        redirect: (context, state) => null,
-        initialLocation: '/',
+        refreshListenable: _GoRouterRefresh(
+          streams: [_authCubit.stream],
+        ),
+        redirect: (context, state) {
+          final authState = _authCubit.state;
+
+          if (state.uri.path == '/login' && authState is Authenticated) {
+            return '/home';
+          }
+
+          return null;
+        },
+        initialLocation: '/loading',
         routes: <RouteBase>[
           GoRoute(
-            path: '/',
-            builder: (context, state) => const InitializationView(),
+            path: '/loading',
+            builder: (context, state) => const LoadingView(),
+          ),
+          GoRoute(
+            path: '/login',
+            builder: (context, state) => const LoginView(),
+            pageBuilder: (context, state) => const NoTransitionPage(
+              child: LoginView(),
+            ),
+          ),
+          GoRoute(
+            path: '/home',
+            builder: (context, state) => const HomeView(),
           ),
           GoRoute(
               path: '/details',
@@ -29,4 +62,12 @@ class AppRoutes {
               })
         ],
       );
+}
+
+class _GoRouterRefresh extends ChangeNotifier {
+  _GoRouterRefresh({required List<Stream> streams}) {
+    for (var stream in streams) {
+      stream.listen((_) => notifyListeners());
+    }
+  }
 }

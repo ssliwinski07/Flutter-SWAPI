@@ -4,6 +4,7 @@ import 'package:core_module/di/service_locator.dart';
 import '../cubits/swapi/swapi_cubit.dart';
 import '../cubits/generics/selection_cubit.dart';
 import '../cubits/initialization/app_initialization_cubit.dart';
+import '../cubits/auth/auth_cubit.dart';
 
 class GeneralModule {
   GeneralModule._({required ServiceLocator serviceLocator})
@@ -18,6 +19,8 @@ class GeneralModule {
 
   SwapiCubit get swapiCubit =>
       SwapiCubit(swapiService: _serviceLocator.get<SwapiServiceInterface>());
+
+  AuthCubit get authCubit => AuthCubit();
 
   AppInitializationCubit get appInitializationCubit => AppInitializationCubit();
 

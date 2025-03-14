@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'app_initialization_cubit.dart';
+part of 'auth_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,11 +14,11 @@ part of 'app_initialization_cubit.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AppInitalizationState {
+mixin _$AuthStates {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AppInitalizationState);
+        (other.runtimeType == runtimeType && other is AuthStates);
   }
 
   @override
@@ -26,25 +26,24 @@ mixin _$AppInitalizationState {
 
   @override
   String toString() {
-    return 'AppInitalizationState()';
+    return 'AuthStates()';
   }
 }
 
 /// @nodoc
-class $AppInitalizationStateCopyWith<$Res> {
-  $AppInitalizationStateCopyWith(
-      AppInitalizationState _, $Res Function(AppInitalizationState) __);
+class $AuthStatesCopyWith<$Res> {
+  $AuthStatesCopyWith(AuthStates _, $Res Function(AuthStates) __);
 }
 
 /// @nodoc
 
-class Initial implements AppInitalizationState {
-  const Initial();
+class Authenticated implements AuthStates {
+  const Authenticated();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is Authenticated);
   }
 
   @override
@@ -52,19 +51,19 @@ class Initial implements AppInitalizationState {
 
   @override
   String toString() {
-    return 'AppInitalizationState.initial()';
+    return 'AuthStates.authenticated()';
   }
 }
 
 /// @nodoc
 
-class Initialized implements AppInitalizationState {
-  const Initialized();
+class InProgress implements AuthStates {
+  const InProgress();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initialized);
+        (other.runtimeType == runtimeType && other is InProgress);
   }
 
   @override
@@ -72,18 +71,38 @@ class Initialized implements AppInitalizationState {
 
   @override
   String toString() {
-    return 'AppInitalizationState.initialized()';
+    return 'AuthStates.inProgress()';
   }
 }
 
 /// @nodoc
 
-class Error implements AppInitalizationState {
+class Unauthenticated implements AuthStates {
+  const Unauthenticated();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Unauthenticated);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'AuthStates.unauthenticated()';
+  }
+}
+
+/// @nodoc
+
+class Error implements AuthStates {
   const Error(this.error);
 
-  final String? error;
+  final String error;
 
-  /// Create a copy of AppInitalizationState
+  /// Create a copy of AuthStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -103,17 +122,16 @@ class Error implements AppInitalizationState {
 
   @override
   String toString() {
-    return 'AppInitalizationState.error(error: $error)';
+    return 'AuthStates.error(error: $error)';
   }
 }
 
 /// @nodoc
-abstract mixin class $ErrorCopyWith<$Res>
-    implements $AppInitalizationStateCopyWith<$Res> {
+abstract mixin class $ErrorCopyWith<$Res> implements $AuthStatesCopyWith<$Res> {
   factory $ErrorCopyWith(Error value, $Res Function(Error) _then) =
       _$ErrorCopyWithImpl;
   @useResult
-  $Res call({String? error});
+  $Res call({String error});
 }
 
 /// @nodoc
@@ -123,17 +141,17 @@ class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
   final Error _self;
   final $Res Function(Error) _then;
 
-  /// Create a copy of AppInitalizationState
+  /// Create a copy of AuthStates
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? error = freezed,
+    Object? error = null,
   }) {
     return _then(Error(
-      freezed == error
+      null == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
