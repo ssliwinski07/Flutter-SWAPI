@@ -27,6 +27,7 @@ class AuthCubit extends Cubit<AuthStates> {
         emit(const AuthStates.error('Invalid credentials'));
       } else {
         // simulation of saving auth token in shared preferences
+        // TO DO - create separate service TokenProviderService to fetch and provide token
         await _sharedPreferencesServiceInterface.setString(
             key: 'authToken', value: '45sasf-rweds');
         emit(const AuthStates.authenticated());
