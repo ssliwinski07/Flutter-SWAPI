@@ -26,6 +26,7 @@ class AppRoutes {
 
   GoRouter get goRouter => _goRouter ??= GoRouter(
         refreshListenable: _GoRouterRefresh(
+          //listen to Cubit state changes, so redirect can work properly
           streams: [_authCubit.stream],
         ),
         redirect: (context, state) {
@@ -65,6 +66,7 @@ class AppRoutes {
 }
 
 class _GoRouterRefresh extends ChangeNotifier {
+  // streams is a list in case if more cubit streams will be added in the future
   _GoRouterRefresh({required List<Stream> streams}) {
     for (var stream in streams) {
       stream.listen((_) => notifyListeners());

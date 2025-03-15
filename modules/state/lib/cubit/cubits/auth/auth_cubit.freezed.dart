@@ -37,6 +37,26 @@ class $AuthStatesCopyWith<$Res> {
 
 /// @nodoc
 
+class Initial implements AuthStates {
+  const Initial();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Initial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'AuthStates.initial()';
+  }
+}
+
+/// @nodoc
+
 class Authenticated implements AuthStates {
   const Authenticated();
 
@@ -52,26 +72,6 @@ class Authenticated implements AuthStates {
   @override
   String toString() {
     return 'AuthStates.authenticated()';
-  }
-}
-
-/// @nodoc
-
-class InProgress implements AuthStates {
-  const InProgress();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is InProgress);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'AuthStates.inProgress()';
   }
 }
 

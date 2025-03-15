@@ -1,0 +1,2 @@
+/Users/szymonsliwinski/Desktop/dev/Flutter/Flutter-SWAPI/flutter_swapi/android/app/.cxx/Debug/38l94y6l/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/szymonsliwinski/Desktop/dev/Flutter/Flutter-SWAPI/flutter_swapi/android/app/.cxx/Debug/38l94y6l/armeabi-v7a/CMakeFiles/rebuild_cache.dir

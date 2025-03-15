@@ -1,0 +1,1 @@
+/Users/szymonsliwinski/Desktop/dev/Flutter/Flutter-SWAPI/flutter_swapi/build/app/intermediates/cxx/Debug/38l94y6l/obj/arm64-v8a
