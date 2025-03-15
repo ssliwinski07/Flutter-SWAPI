@@ -11,6 +11,6 @@ class AppDependenciesFactory {
 
   ServiceLocator get serviceLocator => ServiceLocator();
 
-  void setupDependencies({String env = prodEnv}) =>
+  void registerServices({String env = prodEnv}) =>
       configureDependencies(env: env);
 }

@@ -12,7 +12,7 @@ After successful login you will be redirected to home screen, otherwise you will
 - bloc for state management
 - go_router for navigation
 - provider to inject app dependencies
-- retrofit for http requests
+- retrofit for http requests (along with Interceptors -> modules/core/lib/networking/interceptors)
 - freezed for data models and for integration with bloc
 - get_it + injectable - service locator and dependency injector
 

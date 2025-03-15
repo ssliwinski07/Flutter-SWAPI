@@ -1,3 +1,4 @@
+import 'package:base_module/interfaces/service_interfaces.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bloc/bloc.dart';
 
@@ -5,7 +6,13 @@ part 'auth_states.dart';
 part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
-  AuthCubit() : super(const AuthStates.unauthenticated());
+  AuthCubit({
+    required SharedPreferencesServiceInterface
+        sharedPreferencesServiceInterface,
+  })  : _sharedPreferencesServiceInterface = sharedPreferencesServiceInterface,
+        super(const AuthStates.unauthenticated());
+
+  final SharedPreferencesServiceInterface _sharedPreferencesServiceInterface;
 
   Future<void> login({
     String? user,
@@ -19,6 +26,9 @@ class AuthCubit extends Cubit<AuthStates> {
       if (user != 'admin' || password != 'admin123') {
         emit(const AuthStates.error('Invalid credentials'));
       } else {
+        // simulation of saving auth token in shared preferences
+        await _sharedPreferencesServiceInterface.setString(
+            key: 'authToken', value: '45sasf-rweds');
         emit(const AuthStates.authenticated());
       }
     } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:base_module/interfaces/service_interfaces/shared_prefererences_service_interface.dart';
 import 'package:base_module/interfaces/service_interfaces/swapi_service_interface.dart';
 import 'package:core_module/di/service_locator.dart';
 
@@ -17,12 +18,19 @@ class GeneralModule {
 
   final ServiceLocator _serviceLocator;
 
-  SwapiCubit get swapiCubit =>
-      SwapiCubit(swapiService: _serviceLocator.get<SwapiServiceInterface>());
+  SwapiCubit get swapiCubit => SwapiCubit(
+        swapiService: _serviceLocator.get<SwapiServiceInterface>(),
+      );
 
-  AuthCubit get authCubit => AuthCubit();
+  AuthCubit get authCubit => AuthCubit(
+        sharedPreferencesServiceInterface:
+            _serviceLocator.get<SharedPreferencesServiceInterface>(),
+      );
 
-  AppInitializationCubit get appInitializationCubit => AppInitializationCubit();
+  AppInitializationCubit get appInitializationCubit => AppInitializationCubit(
+        sharedPreferencesService:
+            _serviceLocator.get<SharedPreferencesServiceInterface>(),
+      );
 
   SelectionCubit<T> selectionCubit<T>() => SelectionCubit<T>();
 }

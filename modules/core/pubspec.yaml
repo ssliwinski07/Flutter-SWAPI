@@ -18,7 +18,7 @@ dependencies:
   dio: ^5.8.0+1
   retrofit: ^4.4.2
   logger: ^2.5.0
-  loader_overlay: ^5.0.0
+  shared_preferences: ^2.5.2
   base_module:
     path: ../base
 
