@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:connector_module/exports/base_models.dart';
+import 'package:connector_module/exports/enums.dart';
+import 'package:connector_module/exports/ui_services.dart';
 import 'package:state_module/cubit/cubits/swapi/swapi_cubit.dart';
 import 'package:state_module/cubit/cubits/generics/selection_cubit.dart';
 
-import '/toast/custom_toast.dart';
-import '/utils/helpers/enums.dart';
 import '/widgets/customs/custom_error.dart';
 import '/widgets/customs/custom_no_data.dart';
 
@@ -21,12 +21,14 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   late SwapiCubit _swapiCubit;
   late SelectionCubit _selectionCubit;
+  late MessageServiceInterface _messageService;
 
   @override
   void initState() {
     super.initState();
     _swapiCubit = context.read<SwapiCubit>();
     _selectionCubit = context.read<SelectionCubit<PeopleModel>>();
+    _messageService = context.read<MessageServiceInterface>();
 
     _swapiCubit.fetchPeople();
   }
@@ -40,23 +42,17 @@ class _HomeViewState extends State<HomeView> {
         if (state is Loaded) {
           final data = state.data as AllPeopleModel?;
 
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            showCustomToast(
-              context: context,
-              message: data == null
-                  ? 'Data fetched succesfully, but no items to show'
-                  : 'Data fetched',
-              infoType: InfoType.success,
-            );
-          });
+          _messageService.show(
+            message: data == null
+                ? 'Data fetched successfully, but there are no items to show'
+                : 'Data fetched successfully',
+            infoType: data == null ? InfoType.warning : InfoType.success,
+          );
         } else if (state is Error) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            showCustomToast(
-              context: context,
-              message: state.error ?? 'Unknown error',
-              infoType: InfoType.error,
-            );
-          });
+          _messageService.show(
+            message: state.error ?? 'Unknown error',
+            infoType: InfoType.error,
+          );
         }
       },
       child: Scaffold(

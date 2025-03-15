@@ -38,13 +38,13 @@ class $AppInitalizationStateCopyWith<$Res> {
 
 /// @nodoc
 
-class Loading implements AppInitalizationState {
-  const Loading();
+class Initial implements AppInitalizationState {
+  const Initial();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Loading);
+        (other.runtimeType == runtimeType && other is Initial);
   }
 
   @override
@@ -52,7 +52,7 @@ class Loading implements AppInitalizationState {
 
   @override
   String toString() {
-    return 'AppInitalizationState.loading()';
+    return 'AppInitalizationState.initial()';
   }
 }
 
