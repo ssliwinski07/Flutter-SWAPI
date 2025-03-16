@@ -15,11 +15,11 @@ void configureDependencies({String env = prodEnv}) =>
 class ServiceLocator {
   ServiceLocator._();
 
-  final GetIt _getIt = GetIt.instance;
-
   static final ServiceLocator _instance = ServiceLocator._();
 
   factory ServiceLocator() => _instance;
+
+  final GetIt _getIt = GetIt.instance;
 
   void init({String env = prodEnv}) {
     _getIt.init(environment: env);
