@@ -33,10 +33,10 @@ After successful login you will be redirected to home screen, otherwise you will
 
    App is splitted into modules, to separate UI from core:
 
-   - base module - contains interfaces
-   - core module - contains dependency injection, interfaces implementation. Depends on base module
-   - state module - contains BLoC/Cubits. Depends on base and core module
-   - UI module - contains widgets routing and UI related services. Depends on connector module and state module to retrieve cubits.
+   - base module - contains interfaces, data models <- `domain layer`
+   - core module - contains dependency injection, interfaces implementation. Depends on base module <- `data layer`
+   - state module - contains BLoC/Cubits. Depends on base and core module <- `presentation layer`
+   - UI module - contains widgets routing and UI related services. Depends on connector module and state module to retrieve cubits. <- `presentation layer`
    - connector module - is a bridge between base/core modules and UI module.
 
    Using BLoC/Cubit for state management (modules/state/lib -> cubit). Created modules to group cubits (modules/state/lib -> cubit -> modules) and CubitFactory (modules/state/lib -> cubit -> factory -> cubit_factory.dart) as a container for modules. Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. CubitFactory is a singleton (same as cubit modules). Lazy initialization has been implemented on modules, so they are initialized only when needed.
