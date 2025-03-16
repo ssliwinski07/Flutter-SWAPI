@@ -24,6 +24,7 @@ import '../services/counter_service_mock.dart' as _i270;
 import '../services/shared_preferences_service.dart' as _i29;
 import '../services/swapi_service.dart' as _i505;
 import '../services/swapi_service_mock.dart' as _i796;
+import '../services/token_provider_service.dart' as _i240;
 
 const String _mockEnv = 'mockEnv';
 const String _prodEnv = 'prodEnv';
@@ -59,8 +60,17 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1016.CounterService(),
       registerFor: {_prodEnv},
     );
+    gh.singleton<_i540.TokenProviderServiceInterface>(
+      () => _i240.TokenProviderService(
+          sharedPreferencesServiceInterface:
+              gh<_i540.SharedPreferencesServiceInterface>()),
+      registerFor: {
+        _prodEnv,
+        _mockEnv,
+      },
+    );
     gh.factory<_i361.Dio>(
-      () => networkModule.dio(gh<_i540.SharedPreferencesServiceInterface>()),
+      () => networkModule.dio(gh<_i540.TokenProviderServiceInterface>()),
       instanceName: 'swapi',
     );
     gh.singleton<_i1059.SwapiServiceInterface>(

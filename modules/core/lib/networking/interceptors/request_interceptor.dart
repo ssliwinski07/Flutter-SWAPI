@@ -4,10 +4,10 @@ import 'package:base_module/interfaces/service_interfaces.dart';
 
 class RequestInterceptor extends Interceptor {
   RequestInterceptor(
-      {required SharedPreferencesServiceInterface sharedPreferencesService})
-      : _sharedPreferencesService = sharedPreferencesService;
+      {required TokenProviderServiceInterface tokenProviderService})
+      : _tokenProviderService = tokenProviderService;
 
-  final SharedPreferencesServiceInterface _sharedPreferencesService;
+  final TokenProviderServiceInterface _tokenProviderService;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -21,8 +21,7 @@ class RequestInterceptor extends Interceptor {
     if (publicEndpoints.isNotEmpty) {
       if (!publicEndpoints.any((element) => options.path.startsWith(element))) {
         // simulation of getting auth token from shared preferences (SWAPI has public endpoints, so token is not required)
-        // TO DO - create separate service TokenProviderService to fetch and provide token
-        final token = _sharedPreferencesService.getString(key: 'authToken');
+        final token = _tokenProviderService.getToken(name: 'authToken');
         defaultHeaders['Authorization'] = 'Bearer $token';
       }
     }

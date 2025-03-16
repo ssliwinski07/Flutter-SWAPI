@@ -7,12 +7,11 @@ part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit({
-    required SharedPreferencesServiceInterface
-        sharedPreferencesServiceInterface,
-  })  : _sharedPreferencesServiceInterface = sharedPreferencesServiceInterface,
+    required TokenProviderServiceInterface tokenProviderService,
+  })  : _tokenProviderService = tokenProviderService,
         super(const AuthStates.unauthenticated());
 
-  final SharedPreferencesServiceInterface _sharedPreferencesServiceInterface;
+  final TokenProviderServiceInterface _tokenProviderService;
 
   Future<void> login({
     String? user,
@@ -27,9 +26,8 @@ class AuthCubit extends Cubit<AuthStates> {
         emit(const AuthStates.error('Invalid credentials'));
       } else {
         // simulation of saving auth token in shared preferences
-        // TO DO - create separate service TokenProviderService to fetch and provide token
-        await _sharedPreferencesServiceInterface.setString(
-            key: 'authToken', value: '45sasf-rweds');
+        await _tokenProviderService.saveToken(
+            name: 'authToken', token: 'testtoken_WOW');
         emit(const AuthStates.authenticated());
       }
     } catch (e) {

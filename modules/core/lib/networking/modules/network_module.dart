@@ -9,15 +9,14 @@ import '../interceptors/request_interceptor.dart';
 @Singleton()
 abstract class NetworkModule {
   @Named('swapi')
-  Dio dio(SharedPreferencesServiceInterface sharedPreferencesService) =>
+  Dio dio(TokenProviderServiceInterface tokenProviderService) =>
       Dio(BaseOptions(
         baseUrl: 'https://swapi.dev/api',
         connectTimeout: const Duration(seconds: 20),
         receiveTimeout: const Duration(seconds: 20),
       ))
         ..interceptors.addAll([
-          RequestInterceptor(
-              sharedPreferencesService: sharedPreferencesService),
+          RequestInterceptor(tokenProviderService: tokenProviderService),
           LoggerInterceptor()
         ]);
 }
