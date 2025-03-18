@@ -35,7 +35,7 @@ After successful login you will be redirected to home screen, otherwise you will
 
    - base module - contains interfaces, data models <- `domain layer`
    - core module - contains dependency injection, interfaces implementation. Depends on base module <- `data layer`
-   - state module - contains BLoC/Cubits. Depends on base and core module <- `presentation layer`
+   - state module - contains BLoC/Cubits. Depends on base and core module
    - UI module - contains widgets routing and UI related services. Depends on connector module and state module to retrieve cubits. <- `presentation layer`
    - connector module - is a bridge between base/core modules and UI module.
 
