@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:connector_module/dependencies/factory/app_dependencies_factory.dart';
 import 'package:base_module/interfaces/service_interfaces.dart';
 
 part 'app_initialization_state.dart';

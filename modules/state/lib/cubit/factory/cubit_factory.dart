@@ -1,9 +1,9 @@
-import 'package:core_module/di/service_locator.dart';
+import 'package:connector_module/DI/di.dart';
 
 import '/cubit/modules/general_module.dart';
 
 class CubitFactory {
-  CubitFactory._() : _serviceLocator = ServiceLocator();
+  CubitFactory._() : _serviceLocator = ServiceLocator.I;
 
   static final CubitFactory _instance = CubitFactory._();
 

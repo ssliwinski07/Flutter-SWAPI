@@ -1,3 +1,4 @@
+/*
 import 'package:core_module/di/service_locator.dart';
 
 import '../../helpers/consts.dart';
@@ -14,3 +15,4 @@ class AppDependenciesFactory {
   void registerServices({String env = prodEnv}) =>
       configureDependencies(env: env);
 }
+*/

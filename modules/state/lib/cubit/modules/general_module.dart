@@ -1,5 +1,5 @@
 import 'package:base_module/interfaces/service_interfaces.dart';
-import 'package:core_module/di/service_locator.dart';
+import 'package:connector_module/DI/di.dart';
 
 import '../cubits/swapi/swapi_cubit.dart';
 import '../cubits/generics/selection_cubit.dart';
@@ -11,7 +11,7 @@ class GeneralModule {
       : _serviceLocator = serviceLocator;
 
   static final GeneralModule _instance =
-      GeneralModule._(serviceLocator: ServiceLocator());
+      GeneralModule._(serviceLocator: ServiceLocator.I);
 
   factory GeneralModule({required ServiceLocator serviceLocator}) => _instance;
 

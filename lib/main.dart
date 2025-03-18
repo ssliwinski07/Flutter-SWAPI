@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:ui_module/root.dart';
 import 'package:flutter/services.dart';
 
-import 'package:connector_module/dependencies/factory/app_dependencies_factory.dart';
+import 'package:connector_module/DI/di.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  AppDependenciesFactory().registerServices();
+  await configureDependencies();
 
   // set env parameter with prodEnv or mockEnv to init with prod/mock dependencies
   // by defualt env=prodEnv
