@@ -5,6 +5,8 @@ App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays 
 Login to app has been added to check how redirect (from go_router package) works. To login please use user: `admin` and password: `admin123`.
 After successful login you will be redirected to home screen, otherwise you will see error message.
 
+App has switch to toggle between single and multi selection option. Setting is saved locally.
+
 ## Getting Started
 
 1. Used packages:
@@ -15,6 +17,7 @@ After successful login you will be redirected to home screen, otherwise you will
 - retrofit for http requests (along with Interceptors -> modules/core/lib/networking/interceptors)
 - freezed for data models and for integration with bloc
 - get_it + injectable - service locator and dependency injector
+- shared_preferences - local storage (settings, saving auth token)
 
 2. Installation and other information
 
@@ -42,6 +45,8 @@ After successful login you will be redirected to home screen, otherwise you will
    Using BLoC/Cubit for state management (modules/state/lib -> cubit). Created modules to group cubits (modules/state/lib -> cubit -> modules) and CubitFactory (modules/state/lib -> cubit -> factory -> cubit_factory.dart) as a container for modules. Thanks to that, maintaining app state could be easier and cleaner, especially when app complexity grows. CubitFactory is a singleton (same as cubit modules). Lazy initialization has been implemented on modules, so they are initialized only when needed.
 
    Simple http requests logging is available.
+
+   After successful login, auth token is saved in shared preferences -> see `AuthCubit` class (modules/state/lib/cubit/cubits/auth/auth_cubit.dart). If endpoint is not in public list, token will be added to the request header -> see `RequestInterceptor` class (modules/core/lib/networking/interceptors/request_interceptor.dart). Generally, SWAPI has public endpoints, so token is not required. Saving and passing token was only made for the purpose of this app.
 
    Running project with FVM:
 

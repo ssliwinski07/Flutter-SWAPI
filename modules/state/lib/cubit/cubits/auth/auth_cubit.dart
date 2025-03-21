@@ -25,7 +25,7 @@ class AuthCubit extends Cubit<AuthStates> {
       if (user != 'admin' || password != 'admin123') {
         emit(const AuthStates.error('Invalid credentials'));
       } else {
-        // simulation of saving auth token in shared preferences
+        // saving auth token in shared preferences
         await _tokenProviderService.saveToken(
             name: 'authToken', token: 'testtoken_WOW');
         emit(const AuthStates.authenticated());
