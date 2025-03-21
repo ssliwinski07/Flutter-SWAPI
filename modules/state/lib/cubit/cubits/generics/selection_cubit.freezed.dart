@@ -61,7 +61,7 @@ class Initial<T> implements SelectionStates<T> {
 class SingleSelection<T> implements SelectionStates<T> {
   const SingleSelection({required this.item});
 
-  final T item;
+  final T? item;
 
   /// Create a copy of SelectionStates
   /// with the given fields replaced by the non-null parameter values.
@@ -95,7 +95,7 @@ abstract mixin class $SingleSelectionCopyWith<T, $Res>
           SingleSelection<T> value, $Res Function(SingleSelection<T>) _then) =
       _$SingleSelectionCopyWithImpl;
   @useResult
-  $Res call({T item});
+  $Res call({T? item});
 }
 
 /// @nodoc
@@ -116,7 +116,7 @@ class _$SingleSelectionCopyWithImpl<T, $Res>
       item: freezed == item
           ? _self.item
           : item // ignore: cast_nullable_to_non_nullable
-              as T,
+              as T?,
     ));
   }
 }

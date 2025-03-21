@@ -1,4 +1,4 @@
-import 'package:connector_module/exports/ui_services.dart';
+import 'package:connector_module/exports/services.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import '/utils/helpers/global_keys.dart';

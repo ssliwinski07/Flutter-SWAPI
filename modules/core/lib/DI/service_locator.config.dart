@@ -21,6 +21,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../networking/modules/network_module.dart' as _i793;
 import '../services/counter_service.dart' as _i1016;
 import '../services/counter_service_mock.dart' as _i270;
+import '../services/settings_service.dart' as _i114;
 import '../services/shared_preferences_service.dart' as _i29;
 import '../services/swapi_service.dart' as _i505;
 import '../services/swapi_service_mock.dart' as _i796;
@@ -62,6 +63,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i540.TokenProviderServiceInterface>(
       () => _i240.TokenProviderService(
+          sharedPreferencesServiceInterface:
+              gh<_i540.SharedPreferencesServiceInterface>()),
+      registerFor: {
+        _prodEnv,
+        _mockEnv,
+      },
+    );
+    gh.singleton<_i540.LocalSettingsServiceInterface>(
+      () => _i114.LocalSettingsService(
           sharedPreferencesServiceInterface:
               gh<_i540.SharedPreferencesServiceInterface>()),
       registerFor: {

@@ -1,4 +1,4 @@
-import 'package:connector_module/exports/ui_services.dart';
+import 'package:connector_module/exports/services.dart';
 import 'package:connector_module/exports/enums.dart';
 import 'package:flutter/material.dart';
 

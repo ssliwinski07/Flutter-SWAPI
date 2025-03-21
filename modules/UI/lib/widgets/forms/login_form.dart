@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:connector_module/exports/ui_services.dart';
+import 'package:connector_module/exports/services.dart';
 import 'package:state_module/cubit/cubits/auth/auth_cubit.dart';
 
 class LoginForm extends StatefulWidget {

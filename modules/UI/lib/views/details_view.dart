@@ -6,7 +6,7 @@ import '/widgets/cards/card_details.dart';
 class DetailsView extends StatelessWidget {
   const DetailsView({super.key, required this.items});
 
-  final List<PeopleModel> items;
+  final List<PeopleModel?> items;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _Details extends StatelessWidget {
     required this.item,
   });
 
-  final PeopleModel item;
+  final PeopleModel? item;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class _Details extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                item.name ?? '-',
+                item?.name ?? '-',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -75,25 +75,25 @@ class _Details extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Birth year: ${item.birthYear ?? '-'}',
+                  'Birth year: ${item?.birthYear ?? '-'}',
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Eye color: ${item.eyeColor ?? '-'}',
+                  'Eye color: ${item?.eyeColor ?? '-'}',
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Height: ${item.height ?? '-'} cm',
+                  'Height: ${item?.height ?? '-'} cm',
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Mass: ${item.mass ?? '-'} kg',
+                  'Mass: ${item?.mass ?? '-'} kg',
                 ),
               ),
             ],

@@ -58,7 +58,7 @@ class AppRoutes {
           GoRoute(
               path: '/details',
               builder: (context, state) {
-                final items = state.extra as List<PeopleModel>;
+                final items = state.extra as List<PeopleModel?>;
                 return DetailsView(items: items);
               })
         ],

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:connector_module/exports/base_models.dart';
 import 'package:connector_module/exports/enums.dart';
-import 'package:connector_module/exports/ui_services.dart';
+import 'package:connector_module/exports/services.dart';
 import 'package:state_module/cubit/cubits/swapi/swapi_cubit.dart';
 import 'package:state_module/cubit/cubits/generics/selection_cubit.dart';
 
@@ -22,6 +22,7 @@ class _HomeViewState extends State<HomeView> {
   late SwapiCubit _swapiCubit;
   late SelectionCubit _selectionCubit;
   late MessageServiceInterface _messageService;
+  late LocalSettingsServiceInterface _localSettingsService;
 
   @override
   void initState() {
@@ -29,13 +30,16 @@ class _HomeViewState extends State<HomeView> {
     _swapiCubit = context.read<SwapiCubit>();
     _selectionCubit = context.read<SelectionCubit<PeopleModel>>();
     _messageService = context.read<MessageServiceInterface>();
+    _localSettingsService = context.read<LocalSettingsServiceInterface>();
 
     _swapiCubit.fetchPeople();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<PeopleModel> items = [];
+    List<PeopleModel?> items = [];
+    ValueNotifier<bool> isMulti = ValueNotifier(
+        _localSettingsService.getSwitchSetting(name: 'selectionKey') ?? false);
 
     return BlocListener<SwapiCubit, SwapiStates>(
       listener: (context, state) {
@@ -62,17 +66,44 @@ class _HomeViewState extends State<HomeView> {
             builder: (context, state) {
               final data =
                   state is Loaded ? (state.data as AllPeopleModel?) : null;
-
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Expanded(
+                    child: ValueListenableBuilder(
+                      valueListenable: isMulti,
+                      builder: (context, value, child) => Row(
+                        children: [
+                          Switch(
+                            value: isMulti.value,
+                            activeTrackColor: Colors.green,
+                            onChanged: (value) async {
+                              if (isMulti.value) {
+                                _selectionCubit.deselectItems();
+                              } else {
+                                _selectionCubit.deselectItem();
+                              }
+                              isMulti.value = value;
+
+                              await _localSettingsService.saveSwitchSetting(
+                                  name: 'selectionKey', value: value);
+                            },
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            isMulti.value
+                                ? 'Multi selection'
+                                : 'Single selection',
+                            style: const TextStyle(fontSize: 16),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                   IconButton(
                     icon: const Icon(Icons.refresh, size: 30),
-                    onPressed: state is Loaded
-                        ? () async {
-                            _swapiCubit.fetchPeople();
-                          }
-                        : null,
+                    onPressed:
+                        state is Loaded ? () => _refreshData(state) : null,
                   ),
                   IconButton(
                     icon: const Icon(Icons.arrow_forward),
@@ -103,6 +134,8 @@ class _HomeViewState extends State<HomeView> {
                     builder: (context, state) {
                       if (state is MultiSelection<PeopleModel>) {
                         items = state.items.toList();
+                      } else if (state is SingleSelection<PeopleModel>) {
+                        items = state.item == null ? [] : [state.item];
                       }
                       return ListView.builder(
                         padding: const EdgeInsets.all(10),
@@ -113,6 +146,8 @@ class _HomeViewState extends State<HomeView> {
 
                           if (state is MultiSelection<PeopleModel>) {
                             isSelected = state.items.contains(person);
+                          } else if (state is SingleSelection<PeopleModel>) {
+                            isSelected = person == state.item;
                           }
 
                           return ListTile(
@@ -121,8 +156,11 @@ class _HomeViewState extends State<HomeView> {
                             selectedColor: Colors.red,
                             selected: isSelected,
                             onTap: () {
-                              _selectionCubit.toggleMultiSelection(
-                                  item: person!);
+                              isMulti.value
+                                  ? _selectionCubit.toggleMultiSelection(
+                                      item: person!)
+                                  : _selectionCubit.toggleSingleSelection(
+                                      item: person!);
                             },
                           );
                         },
@@ -160,7 +198,7 @@ class _HomeViewState extends State<HomeView> {
               onPressed: state is Loading || state is Error || data == null
                   ? null
                   : () {
-                      _selectionCubit.deselectItem();
+                      _selectionCubit.deselectItems();
                     },
               child: const Text(
                 'Deselect all',
@@ -174,5 +212,14 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
     );
+  }
+
+  Future<void> _refreshData(SwapiStates state) async {
+    _swapiCubit.fetchPeople();
+    if (state is SingleSelection<PeopleModel>) {
+      _selectionCubit.deselectItem();
+    } else {
+      _selectionCubit.deselectItems();
+    }
   }
 }

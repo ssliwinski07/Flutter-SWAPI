@@ -7,10 +7,12 @@ part 'selection_states.dart';
 class SelectionCubit<T> extends Cubit<SelectionStates<T>> {
   SelectionCubit() : super(const SelectionStates.initial());
 
-  void selectItem({required T? item}) {}
+  void deselectItems() {
+    emit(const MultiSelection(items: {}));
+  }
 
   void deselectItem() {
-    emit(const MultiSelection(items: {}));
+    emit(const SingleSelection(item: null));
   }
 
   void toggleMultiSelection({required T item}) {
@@ -28,11 +30,12 @@ class SelectionCubit<T> extends Cubit<SelectionStates<T>> {
   }
 
   void toggleSingleSelection({required T item}) {
-    if ((state is SingleSelection<T>) &&
-        (state as SingleSelection<T>).item == item) {
+    T? selectedItem = item;
+    if (state is SingleSelection<T> &&
+        (state as SingleSelection<T>).item == selectedItem) {
       emit(const SelectionStates.initial());
     } else {
-      emit(SingleSelection(item: item));
+      emit(SingleSelection(item: selectedItem));
     }
   }
 }
