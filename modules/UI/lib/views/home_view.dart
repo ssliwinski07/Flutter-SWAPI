@@ -40,8 +40,6 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     List<PeopleModel?> items = [];
 
-    bool isMulti = false;
-
     return BlocListener<SwapiCubit, SwapiStates>(
       listener: (context, state) {
         if (state is Loaded) {
