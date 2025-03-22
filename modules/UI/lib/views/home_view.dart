@@ -7,6 +7,7 @@ import 'package:connector_module/exports/enums.dart';
 import 'package:connector_module/exports/services.dart';
 import 'package:state_module/cubit/cubits/swapi/swapi_cubit.dart';
 import 'package:state_module/cubit/cubits/generics/selection_cubit.dart';
+import 'package:state_module/cubit/cubits/settings/local/local_settings_cubit.dart';
 
 import '/widgets/customs/custom_error.dart';
 import '/widgets/customs/custom_no_data.dart';
@@ -21,16 +22,16 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   late SwapiCubit _swapiCubit;
   late SelectionCubit _selectionCubit;
+  late LocalSettingsCubit _localSettingsCubit;
   late MessageServiceInterface _messageService;
-  late LocalSettingsServiceInterface _localSettingsService;
 
   @override
   void initState() {
     super.initState();
     _swapiCubit = context.read<SwapiCubit>();
     _selectionCubit = context.read<SelectionCubit<PeopleModel>>();
+    _localSettingsCubit = context.read<LocalSettingsCubit>();
     _messageService = context.read<MessageServiceInterface>();
-    _localSettingsService = context.read<LocalSettingsServiceInterface>();
 
     _swapiCubit.fetchPeople();
   }
@@ -38,8 +39,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     List<PeopleModel?> items = [];
-    ValueNotifier<bool> isMulti = ValueNotifier(
-        _localSettingsService.getSwitchSetting(name: 'selectionKey') ?? false);
+
+    bool isMulti = false;
 
     return BlocListener<SwapiCubit, SwapiStates>(
       listener: (context, state) {
@@ -70,34 +71,34 @@ class _HomeViewState extends State<HomeView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: ValueListenableBuilder(
-                      valueListenable: isMulti,
-                      builder: (context, value, child) => Row(
-                        children: [
-                          Switch(
-                            value: isMulti.value,
-                            activeTrackColor: Colors.green,
-                            onChanged: (value) async {
-                              if (isMulti.value) {
-                                _selectionCubit.deselectItems();
-                              } else {
-                                _selectionCubit.deselectItem();
-                              }
-                              isMulti.value = value;
+                    child: BlocBuilder<LocalSettingsCubit, LocalSettingsStates>(
+                      builder: (context, state) {
+                        return Row(
+                          children: [
+                            Switch(
+                              value: (state as ToggleSelectionSwitch).value,
+                              activeTrackColor: Colors.green,
+                              onChanged: (value) async {
+                                if (state.value) {
+                                  _selectionCubit.deselectItems();
+                                } else {
+                                  _selectionCubit.deselectItem();
+                                }
 
-                              await _localSettingsService.saveSwitchSetting(
-                                  name: 'selectionKey', value: value);
-                            },
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            isMulti.value
-                                ? 'Multi selection'
-                                : 'Single selection',
-                            style: const TextStyle(fontSize: 16),
-                          )
-                        ],
-                      ),
+                                await _localSettingsCubit.toggleSelectionSwitch(
+                                    value: value);
+                              },
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              state.value
+                                  ? 'Multi selection'
+                                  : 'Single selection',
+                              style: const TextStyle(fontSize: 16),
+                            )
+                          ],
+                        );
+                      },
                     ),
                   ),
                   IconButton(
@@ -150,13 +151,19 @@ class _HomeViewState extends State<HomeView> {
                             isSelected = person == state.item;
                           }
 
+                          final localSettingState =
+                              context.watch<LocalSettingsCubit>().state;
+                          final isMulti =
+                              localSettingState is ToggleSelectionSwitch &&
+                                  localSettingState.value;
+
                           return ListTile(
                             title: Text(person?.name ?? ''),
                             splashColor: Colors.transparent,
                             selectedColor: Colors.red,
                             selected: isSelected,
                             onTap: () {
-                              isMulti.value
+                              isMulti
                                   ? _selectionCubit.toggleMultiSelection(
                                       item: person!)
                                   : _selectionCubit.toggleSingleSelection(

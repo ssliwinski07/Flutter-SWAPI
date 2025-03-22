@@ -5,6 +5,7 @@ import '../cubits/swapi/swapi_cubit.dart';
 import '../cubits/generics/selection_cubit.dart';
 import '../cubits/initialization/app_initialization_cubit.dart';
 import '../cubits/auth/auth_cubit.dart';
+import '../cubits/settings/local/local_settings_cubit.dart';
 
 class GeneralModule {
   GeneralModule._({required ServiceLocator serviceLocator})
@@ -26,7 +27,15 @@ class GeneralModule {
             _serviceLocator.get<TokenProviderServiceInterface>(),
       );
 
-  AppInitializationCubit get appInitializationCubit => AppInitializationCubit(
+  LocalSettingsCubit get localSettingsCubit => LocalSettingsCubit(
+        localSettingsService:
+            _serviceLocator.get<LocalSettingsServiceInterface>(),
+      );
+  // can't be a getter since it requires a parameter
+  AppInitializationCubit appInitializationCubit(
+          {required LocalSettingsCubit localSettingsCubit}) =>
+      AppInitializationCubit(
+        localSettingsCubit: localSettingsCubit,
         sharedPreferencesService:
             _serviceLocator.get<SharedPreferencesServiceInterface>(),
       );

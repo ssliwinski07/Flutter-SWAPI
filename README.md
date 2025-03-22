@@ -5,7 +5,7 @@ App is integrated with SWAPI (https://swapi.dev/). It fetches data and displays 
 Login to app has been added to check how redirect (from go_router package) works. To login please use user: `admin` and password: `admin123`.
 After successful login you will be redirected to home screen, otherwise you will see error message.
 
-App has switch to toggle between single and multi selection option. Setting is saved locally.
+App has switch to toggle between single and multi selection option. Setting is saved locally. Saving and getting local settings is handled by `LocalSettingsCubit` (modules/state/lib/cubit/cubits/settings/local/local_settings_cubit.dart).
 
 ## Getting Started
 
