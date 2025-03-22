@@ -9,7 +9,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'services/ui/spinner_service.dart';
 import 'services/ui/message_service.dart';
-import 'package:connector_module/dependencies/factory/app_dependencies_factory.dart';
 import 'routes/app_routes.dart';
 import '/utils/helpers/global_keys.dart';
 
@@ -21,21 +20,20 @@ class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubitFactory = CubitFactory();
-    final appInitializationCubit =
-        cubitFactory.generalModule.appInitializationCubit;
+    final swapiCubit = cubitFactory.generalModule.swapiCubit;
+    final localSettingsCubit = cubitFactory.generalModule.localSettingsCubit;
+    final appInitializationCubit = cubitFactory.generalModule
+        .appInitializationCubit(localSettingsCubit: localSettingsCubit);
+    final selectionCubit =
+        cubitFactory.generalModule.selectionCubit<PeopleModel>();
     final authCubit = cubitFactory.generalModule.authCubit;
+
     final appRoutes = AppRoutes(authCubit: authCubit);
-    final localSettingsService = AppDependenciesFactory()
-        .serviceLocator
-        .get<LocalSettingsServiceInterface>();
 
     return MultiProvider(
       providers: [
         Provider<CubitFactory>(
           create: (context) => cubitFactory,
-        ),
-        Provider<LocalSettingsServiceInterface>(
-          create: (_) => localSettingsService,
         ),
         Provider<SpinnerServiceInterface>(
           create: (_) => SpinnerService(),
@@ -53,11 +51,13 @@ class Root extends StatelessWidget {
             create: (_) => authCubit,
           ),
           BlocProvider(
-            create: (_) => cubitFactory.generalModule.swapiCubit,
+            create: (_) => swapiCubit,
           ),
           BlocProvider(
-            create: (_) =>
-                cubitFactory.generalModule.selectionCubit<PeopleModel>(),
+            create: (_) => selectionCubit,
+          ),
+          BlocProvider(
+            create: (_) => localSettingsCubit,
           )
         ],
         child: GlobalLoaderOverlay(

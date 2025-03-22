@@ -1,18 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:connector_module/dependencies/factory/app_dependencies_factory.dart';
 import 'package:base_module/interfaces/service_interfaces.dart';
+
+import '../settings/local/local_settings_cubit.dart';
 
 part 'app_initialization_state.dart';
 part 'app_initialization_cubit.freezed.dart';
 
 class AppInitializationCubit extends Cubit<AppInitalizationState> {
-  AppInitializationCubit(
-      {required SharedPreferencesServiceInterface sharedPreferencesService})
-      : _sharedPreferencesService = sharedPreferencesService,
+  AppInitializationCubit({
+    required SharedPreferencesServiceInterface sharedPreferencesService,
+    required LocalSettingsCubit localSettingsCubit,
+  })  : _sharedPreferencesService = sharedPreferencesService,
+        _localSettingsCubit = localSettingsCubit,
         super(const AppInitalizationState.initial());
 
   final SharedPreferencesServiceInterface _sharedPreferencesService;
+  final LocalSettingsCubit _localSettingsCubit;
 
   Future<void> initializeApp() async {
     try {
@@ -28,5 +32,6 @@ class AppInitializationCubit extends Cubit<AppInitalizationState> {
 
   Future<void> _setup() async {
     await _sharedPreferencesService.initialize();
+    _localSettingsCubit.loadSettings();
   }
 }
