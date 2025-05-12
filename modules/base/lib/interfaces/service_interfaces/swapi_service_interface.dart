@@ -1,6 +1,6 @@
 // ignore: unused_import
-import '/models/people/all_people.dart';
+import '/models/people/people_model.dart';
 
 abstract interface class SwapiServiceInterface {
-  Future<AllPeopleModel> getPeople();
+  Future<List<PeopleModel>> getPeople();
 }

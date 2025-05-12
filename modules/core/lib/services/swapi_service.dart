@@ -3,7 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:injectable/injectable.dart';
 
 import '/utils/helpers/consts.dart';
-import 'package:base_module/models/people/all_people.dart';
+import 'package:base_module/models/people/people_model.dart';
 import 'package:base_module/interfaces/service_interfaces/swapi_service_interface.dart';
 
 part 'swapi_service.g.dart';
@@ -16,5 +16,5 @@ abstract class SwapiService implements SwapiServiceInterface {
 
   @override
   @GET('/people')
-  Future<AllPeopleModel> getPeople();
+  Future<List<PeopleModel>> getPeople();
 }

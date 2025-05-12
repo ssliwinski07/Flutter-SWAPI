@@ -11,7 +11,7 @@ abstract class NetworkModule {
   @Named('swapi')
   Dio dio(TokenProviderServiceInterface tokenProviderService) =>
       Dio(BaseOptions(
-        baseUrl: 'https://swapi.dev/api',
+        baseUrl: 'https://swapi.info/api',
         connectTimeout: const Duration(seconds: 20),
         receiveTimeout: const Duration(seconds: 20),
       ))

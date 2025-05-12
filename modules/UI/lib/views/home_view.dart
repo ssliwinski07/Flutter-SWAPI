@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
     return BlocListener<SwapiCubit, SwapiStates>(
       listener: (context, state) {
         if (state is Loaded) {
-          final data = state.data as AllPeopleModel?;
+          final data = state.data as List<PeopleModel>?;
 
           _messageService.show(
             message: data == null
@@ -64,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
           title: BlocBuilder<SwapiCubit, SwapiStates>(
             builder: (context, state) {
               final data =
-                  state is Loaded ? (state.data as AllPeopleModel?) : null;
+                  state is Loaded ? (state.data as List<PeopleModel>?) : null;
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -123,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
               switch (state) {
                 case Loading():
                   return const CircularProgressIndicator.adaptive();
-                case Loaded(:final data as AllPeopleModel?):
+                case Loaded(:final data as List<PeopleModel?>?):
                   if (data == null) {
                     return const CustomNoData();
                   }
@@ -138,9 +138,9 @@ class _HomeViewState extends State<HomeView> {
                       }
                       return ListView.builder(
                         padding: const EdgeInsets.all(10),
-                        itemCount: data.results?.length,
+                        itemCount: data.length,
                         itemBuilder: (context, index) {
-                          final person = data.results?[index];
+                          final person = data[index];
                           bool isSelected = false;
 
                           if (state is MultiSelection<PeopleModel>) {
@@ -190,7 +190,7 @@ class _HomeViewState extends State<HomeView> {
         floatingActionButton: BlocBuilder<SwapiCubit, SwapiStates>(
           builder: (context, state) {
             final data =
-                state is Loaded ? (state.data as AllPeopleModel?) : null;
+                state is Loaded ? (state.data as List<PeopleModel>?) : null;
             return ElevatedButton(
               style: ElevatedButton.styleFrom(
                 splashFactory: NoSplash.splashFactory,
