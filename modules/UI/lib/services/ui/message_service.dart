@@ -20,10 +20,11 @@ class MessageService implements MessageServiceInterface {
       duration: _buildDuration(infoType),
       backgroundColor: _buildInfoType(infoType),
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20),
-        topRight: Radius.circular(20),
-      )),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
     );
 
     messagesKey.currentState!.showSnackBar(snackBar);
