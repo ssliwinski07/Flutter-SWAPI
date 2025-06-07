@@ -22,15 +22,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   late SwapiCubit _swapiCubit;
   late SelectionCubit _selectionCubit;
-  late LocalSettingsCubit _localSettingsCubit;
   late MessageServiceInterface _messageService;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _swapiCubit = context.read<SwapiCubit>();
     _selectionCubit = context.read<SelectionCubit<PeopleModel>>();
-    _localSettingsCubit = context.read<LocalSettingsCubit>();
     _messageService = context.read<MessageServiceInterface>();
 
     _swapiCubit.fetchPeople();
@@ -58,84 +56,28 @@ class _HomeViewState extends State<HomeView> {
           );
         }
       },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: BlocBuilder<SwapiCubit, SwapiStates>(
-            builder: (context, state) {
-              final data =
-                  state is Loaded ? (state.data as List<PeopleModel>?) : null;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: BlocBuilder<LocalSettingsCubit, LocalSettingsStates>(
-                      builder: (context, state) {
-                        return Row(
-                          children: [
-                            Switch(
-                              value: (state as ToggleSelectionSwitch).value,
-                              activeTrackColor: Colors.green,
-                              onChanged: (value) async {
-                                if (state.value) {
-                                  _selectionCubit.deselectItems();
-                                } else {
-                                  _selectionCubit.deselectItem();
-                                }
+      child: BlocBuilder<SelectionCubit<PeopleModel>,
+          SelectionStates<PeopleModel>>(
+        builder: (context, selectionState) {
+          if (selectionState is MultiSelection<PeopleModel>) {
+            items = selectionState.items.toList();
+          } else if (selectionState is SingleSelection<PeopleModel>) {
+            items = selectionState.item == null ? [] : [selectionState.item];
+          }
 
-                                await _localSettingsCubit.toggleSelectionSwitch(
-                                    value: value);
-                              },
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              state.value
-                                  ? 'Multi selection'
-                                  : 'Single selection',
-                              style: const TextStyle(fontSize: 16),
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.refresh, size: 30),
-                    onPressed:
-                        state is Loaded ? () => _refreshData(state) : null,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: state is Loaded && data != null
-                        ? () {
-                            context.push('/details', extra: items);
-                          }
-                        : null,
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-        body: Center(
-          child: BlocBuilder<SwapiCubit, SwapiStates>(
-            builder: (context, state) {
-              switch (state) {
-                case Loading():
-                  return const CircularProgressIndicator.adaptive();
-                case Loaded(:final data as List<PeopleModel?>?):
-                  if (data == null) {
-                    return const CustomNoData();
-                  }
-
-                  return BlocBuilder<SelectionCubit<PeopleModel>,
-                      SelectionStates<PeopleModel>>(
-                    builder: (context, state) {
-                      if (state is MultiSelection<PeopleModel>) {
-                        items = state.items.toList();
-                      } else if (state is SingleSelection<PeopleModel>) {
-                        items = state.item == null ? [] : [state.item];
+          return Scaffold(
+            appBar: _HomeViewAppBar(items: items),
+            body: Center(
+              child: BlocBuilder<SwapiCubit, SwapiStates>(
+                builder: (context, state) {
+                  switch (state) {
+                    case Loading():
+                      return const CircularProgressIndicator.adaptive();
+                    case Loaded(:final data as List<PeopleModel?>?):
+                      if (data == null) {
+                        return const CustomNoData();
                       }
+
                       return ListView.builder(
                         padding: const EdgeInsets.all(10),
                         itemCount: data.length,
@@ -143,10 +85,11 @@ class _HomeViewState extends State<HomeView> {
                           final person = data[index];
                           bool isSelected = false;
 
-                          if (state is MultiSelection<PeopleModel>) {
-                            isSelected = state.items.contains(person);
-                          } else if (state is SingleSelection<PeopleModel>) {
-                            isSelected = person == state.item;
+                          if (selectionState is MultiSelection<PeopleModel>) {
+                            isSelected = selectionState.items.contains(person);
+                          } else if (selectionState
+                              is SingleSelection<PeopleModel>) {
+                            isSelected = person == selectionState.item;
                           }
 
                           final localSettingState =
@@ -170,51 +113,137 @@ class _HomeViewState extends State<HomeView> {
                           );
                         },
                       );
-                    },
-                  );
-                case Error():
-                  {
-                    return CustomError(
-                      errorMessage: 'Error while fetching data',
-                      onRefresh: () async {
-                        await _swapiCubit.fetchPeople();
-                      },
-                    );
+
+                    case Error():
+                      {
+                        return CustomError(
+                          errorMessage: 'Error while fetching data',
+                          onRefresh: () async {
+                            await _swapiCubit.fetchPeople();
+                          },
+                        );
+                      }
+                    default:
+                      return const SizedBox.shrink();
                   }
-                default:
-                  return const SizedBox.shrink();
-              }
-            },
-          ),
-        ),
-        floatingActionButton: BlocBuilder<SwapiCubit, SwapiStates>(
-          builder: (context, state) {
-            final data =
-                state is Loaded ? (state.data as List<PeopleModel>?) : null;
-            return ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                splashFactory: NoSplash.splashFactory,
-                shadowColor: Colors.black,
-                elevation: 1,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                },
+              ),
+            ),
+            floatingActionButton: BlocBuilder<SwapiCubit, SwapiStates>(
+              builder: (context, state) {
+                final data =
+                    state is Loaded ? (state.data as List<PeopleModel>?) : null;
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    splashFactory: NoSplash.splashFactory,
+                    shadowColor: Colors.black,
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: state is Loading || state is Error || data == null
+                      ? null
+                      : () {
+                          _selectionCubit.deselectItems();
+                        },
+                  child: const Text(
+                    'Deselect all',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _HomeViewAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const _HomeViewAppBar({required this.items});
+
+  final List<PeopleModel?> items;
+
+  @override
+  State<_HomeViewAppBar> createState() => _HomeViewAppBarState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _HomeViewAppBarState extends State<_HomeViewAppBar> {
+  late SelectionCubit _selectionCubit;
+  late LocalSettingsCubit _localSettingsCubit;
+  late SwapiCubit _swapiCubit;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _swapiCubit = context.read<SwapiCubit>();
+    _selectionCubit = context.read<SelectionCubit<PeopleModel>>();
+    _localSettingsCubit = context.read<LocalSettingsCubit>();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      title: BlocBuilder<SwapiCubit, SwapiStates>(
+        builder: (context, state) {
+          final data =
+              state is Loaded ? (state.data as List<PeopleModel>?) : null;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: BlocBuilder<LocalSettingsCubit, LocalSettingsStates>(
+                  builder: (context, state) {
+                    return Row(
+                      children: [
+                        Switch(
+                          value: (state as ToggleSelectionSwitch).value,
+                          activeTrackColor: Colors.green,
+                          onChanged: (value) async {
+                            if (state.value) {
+                              _selectionCubit.deselectItems();
+                            } else {
+                              _selectionCubit.deselectItem();
+                            }
+
+                            await _localSettingsCubit.toggleSelectionSwitch(
+                                value: value);
+                          },
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          state.value ? 'Multi selection' : 'Single selection',
+                          style: const TextStyle(fontSize: 16),
+                        )
+                      ],
+                    );
+                  },
                 ),
               ),
-              onPressed: state is Loading || state is Error || data == null
-                  ? null
-                  : () {
-                      _selectionCubit.deselectItems();
-                    },
-              child: const Text(
-                'Deselect all',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              IconButton(
+                icon: const Icon(Icons.refresh, size: 30),
+                onPressed: state is Loaded ? () => _refreshData(state) : null,
               ),
-            );
-          },
-        ),
+              IconButton(
+                icon: const Icon(Icons.arrow_forward),
+                onPressed: state is Loaded && data != null
+                    ? () {
+                        context.push('/details', extra: widget.items);
+                      }
+                    : null,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
